@@ -36,6 +36,7 @@
 				display: block;
   				margin-left: auto;
   				margin-right: auto;
+				max-width: 100%;
 			}
 			code{
 				margin-top: 2.5%;
@@ -112,11 +113,11 @@ Nmap done: 1 IP address (1 host up) scanned in 136.58 seconds</code></pre>
 								<img src="./img/horizontall/strapi_prompt_rce.png" class="centerimage"/>
 								Back to our computer, on our listener we have...
 								<img src="./img/horizontall/listener_for_strapi_exploit.png" class="centerimage" width="50%"/>
-								As, you can see we successfully go a shell back to our listener. To spawn a proper shell use the command;<code>$ /usr/bin/script -qc /bin/bash /dev/null</code>. Now we should have enough privileges
+								As, you can see we successfully gotten a connection back on our listener. To spawn a proper shell use the command;<code>$ /usr/bin/script -qc /bin/bash /dev/null</code>. Now we should have enough privileges
 								to read the contents of the /home directory and get the user FLAG. Let's check...
 								<img src="./img/horizontall/user_flag.png" class="centerimage"/>
 								voila (lol), we got the user FLAG. Now we have to get the root FLAG. To get this flag we have to access the root directory and its content. But since we are still strapi user we cannot access the contents
-								of the root directory. We therefore have to escalate our privilege to root.
+								of the root directory. We therefore have to escalate our privileges to root.
 							</p>
 							<p>
 								<h3>Privilege Escalation</h3>
@@ -128,20 +129,20 @@ Nmap done: 1 IP address (1 host up) scanned in 136.58 seconds</code></pre>
 								connection to ourselves.<br><br>
 								Chisel is not on our target machine so let's send it from our machine, start a local server on your machine with the command;<code>$ python -m http.server 8000</code>. Using wget we can then download chisel from our machine. we have...
 								<img src="img/horizontall/chisel_download.png" class="centerimage"/>
-								Now let's port forward the connection. On your machine start your listener with the command;<code>$ chisel server -p 9000 --reverse &</code>. On our target machine we have...
+								Now let's port forward the connection. On your machine start a chisel server with the command;<code>$ chisel server -p 9000 --reverse &</code>. On our target machine connect to the server...
 								<img src="img/horizontall/chisel_connection_succeded.png" class="centerimage"/>
 								Great, we have connection. Let's check our web browser to confirm that it is a web server...								
 								<span class="image main"><img src="./img/horizontall/laravel_web_server.png" alt="" /></span>
 								It is indeed a web server using the laravel framework. At the right bottom of the page, we can confirm the version of the framework to be<code>Laravel v8 (PHP v7.4.18)</code><br><br>
 								Checking the internet, vulnerability for this laravel version was found on<code><a href="https://www.exploit-db.com/exploits/49424" style="color: #FFA500;">https://www.exploit-db.com/exploits/49424</a></code>. I tried using this exploit, but it seemed to fail most of the time. I found a
 								better exploit on<code><a href="https://github.com/SNCKER/CVE-2021-3129/blob/master/exploit.py" style="color: #FFA500;">https://github.com/SNCKER/CVE-2021-3129/blob/master/exploit.py</a></code>.<br><br>
-								This exploit causes Remote Code Execution on the target machine. I modified the exploit to instruct target machine (horizontall) to download a php shell that would be used for a reverse connection.<br><br>
+								This exploit causes Remote Code Execution on the target machine. I modified the exploit to instruct the target machine (horizontall) to download a php shell that would be used for a reverse connection.<br><br>
 								After running the exploit, we should have our php file on the web server. To execute it we have to view the file using the url;<code>http://127.0.0.1:9001/shell.php</code>.<br><br>
 								Remember to start a listener on our machine that would receive the connection. If indeed the root is the owner of the web service, we should get a root shell on our computer. After executing the exploit we have...
 								<img src="img/horizontall/root_shell.png" class="centerimage" width=500rem/>
 								SUCCESS, we now have a root shell and can view the root FLAG.<br><br>
 							</p>
-							<p style="text-align: center;">Thank you for reading my writeup 😀</p>
+							<p style="text-align: center;">Thank you for reading my writeup 😀 <a href="../../index.html" style="color: #FFA500;">Home</a></p>
                         </article>
                         </div>
                 </header>
