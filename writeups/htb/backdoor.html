@@ -1,0 +1,161 @@
+<!DOCTYPE HTML>
+<!--
+	Dimension by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Blacree - Backdoor</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="../../assets/css/noscript.css" /></noscript>
+        <style type="text/css">
+            #middle{
+			font-family: Liberation Mono;
+			font-size: 0.9rem;
+			text-align: left;
+            padding: 4.5rem 2.5rem 1.5rem 2.5rem ;
+			position: relative;
+			width: 50rem;
+			max-width: 100%;
+			background-color: rgba(27, 31, 34, 0.85);
+			border-radius: 4px;
+            }
+			.img{display: block;
+  				margin-left: auto;
+  				margin-right: auto;
+  				width: 100%;
+				margin-top: 2.5%;
+				margin-bottom: 2.5%;
+			}
+			.centerimage{
+				margin-top: 2.5%;
+				margin-bottom: 2.5%;
+				display: block;
+				max-width: 100%;
+			}
+			code{
+				margin-top: 2.5%;
+				margin-bottom: 2.5%;
+			}
+        </style>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+                <header id="header">
+				<!-- Main -->
+					<!-- <div class="content"> -->
+                        <div id="middle">
+                        <article>
+                            <a href="../../index.html"><h2 style="text-align: right; color: gray;">Home</h2></a>
+                            <p>
+							<h2 class="major">HTB - BACKDOOR</h2>
+							More Info to come<br><br>
+							----------------------------------------------------------
+							</p>
+							<p>
+								<h3>Scanning and Enumeration</h3>
+								Let's perform an NMAP scan...
+                                <pre><code>$ nmap --min-rate=1000 -T4 -p- -sV 10.10.11.125                  
+Starting Nmap 7.92 ( https://nmap.org ) at 2021-12-30 00:56 WAT
+Warning: 10.10.11.125 giving up on port because retransmission cap hit (6).
+Nmap scan report for 10.10.11.125
+Host is up (0.18s latency).
+Not shown: 65532 closed tcp ports (reset)
+PORT     STATE SERVICE VERSION
+22/tcp   open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+80/tcp   open  http    Apache httpd 2.4.41 ((Ubuntu))
+1337/tcp open  waste?
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 134.99 seconds</code></pre>
+We've identified three services running on the machine. An SSH server, a Web server and an unidentified service called "waste". Let's take a look at the web server and see what we can find!<br><br>
+                            <h4>Apache httpd 2.4.41 - TCP 80</h4>
+                            <img src="img/backdoor/word_press_identification.png" class="centerimage"/>
+                            At first glance, at the bottom of the page we can see that the site is a Word-press managed application. We have the file-directory sturcture of a typical Word-press application to be...
+                            <pre><code>    [dir] wp-admin
+    [dir] wp-includes
+    [dir] wp-content	
+    index.php
+    license.txt
+    readme.html
+    wp-activate.php
+    wp-blog-header.php
+    wp-comments-post.php
+    wp-config-sample.php
+    wp-cron.php
+    wp-links-opml.php
+    wp-load.php
+    wp-login.php
+    wp-mail.php
+    wp-settings.php
+    wp-signup.php
+    wp-trackback.php
+    xmlrpc.php</code></pre>
+                            The "wp-links-opml.php" file is known to contain Word-press version information. Let's visit <code>http://backdoor.htb/wp-links-opml.php</code> to get the Word-press version...
+                            <img src="img/backdoor/word_press_confirmation.png" class="centerimage"/>
+                            We have <code>WordPress/5.8.1</code> running on the web server. Looking through the internet there seems to be no critical exploitable vuluerability for this Word-press version.<br><br>
+                            The wp-content dir is known to contain website themes, plugin files and media uploads. Taking a look at <code>http://backdoor.htb/wp-content/plugins/</code> we have...
+                            <img src="img/backdoor/wp-content_plugins_directory.png" class="centerimage"/>
+                            We have an ebook-download plugin on the application which is used to download files from the web application. The contents of the plugin are...
+                            <img src="img/backdoor/ebook_download_contents.png" class="centerimage"/>
+                            In the "readme.txt" file, the ebook version is identified to be <code>version 1.1</code> and this version of ebook-download plugin is vulnerable to Directory Traversal.<br><br>
+                            Directory traversal is a web security vulnerability that allows an attacker to read or even write to arbitrary files on the server that is running an application. It exploits insufficient security validation or
+                            sanitization of user-supplied file names.<br><br>
+                            PoC for this vulnerability is...
+                            <pre><code>/wp-content/plugins/ebook-download/filedownload.php?ebookdownloadurl=[file_path]</code></pre>
+                            <h3>Ebook-download Plugin Exploitation</h3>
+                            Now, that we know how to exploit the ebook plugin, our focus should be on how we can get more suitable information that would enable us  to exploit the attack surfaces we already have access to. Remember from our scan, we have access to an ssh service,
+                            web service, and an unidentified service running on port 1337.<br><br>
+                            First, let's work on the ssh serivce. Let's see if we can download the <code>id_rsa</code> private key file of a user. But first we need to identify a valid user. Let's download the <code>passwd</code> file first. Use the url...
+                            <pre><code>/wp-content/plugins/ebook-download/filedownload.php?ebookdownloadurl=/etc/passwd</code></pre>
+                            <img src="img/backdoor/passwd_file_details.png" class="centerimage"/>
+                            Great, we have a valid user called <code>user</code> on the machine. Now let's download the user's ssh private_key using the <url class=""></url>
+                            <pre><code>/wp-content/plugins/ebook-download/filedownload.php?ebookdownloadurl=/home/user/.ssh/id_rsa</code></pre>
+                            <img src="img/backdoor/id_rsa_result.png" class="centerimage"/>
+                            As you can see, we got nothing useful.<br><br>
+                            Next let's see if we can identify the service running on port 1337. Using the same PoC let's get the <code>/proc/net/sched_debug</code> file. This file shows us running processes on a machine. After analyzing it's content, there is an interesting...
+                            <img src="img/backdoor/gdbserver_found.png" class="centerimage"/>
+                            Let's get the file <code>/proc/net/68218/cmdline</code>. This file can be used to identify the port that the process "68218" is running on...
+                            <img src="img/backdoor/port_identified_from_process.png" class="centerimage"/>
+                            Great we, know that the port running on the process is 1337, which is a gdbserver. Now let's hit the streets (Google) and see what we can find...LOL
+                            <img src="img/backdoor/gdb_exploit_db.png" class="centerimage"/>
+                            We have a gdb python exploit with the following usage...
+                            <img src="img/backdoor/gdb_python_exploit_usage.png" class="centerimage"/>
+                            Set the necessary options and run the exploit. Make sure you have your listener listening...
+                            <img src="img/backdoor/Shell_for_user.png" class="centerimage"/>
+                            <img src="img/backdoor/shell_success_vibes.gif" class="centerimage"/>
+                            Boom...We got a shell boii, get that flag &#128513;<br><br>
+                            Type <code>$ /usr/bin/script -qc /bin/bash /dev/null</code> to spawn a proper tty shell.<br><br>
+                            <h3>Privilege Escalation</h3>
+                            The first thing to check for privilege escalation is the files that contain SUID bit. we have...
+                            <img src="img/backdoor/SUID_info.png" class="centerimage"/>
+                            It appears the "screen" utility has this bit set. The "screen" utility is a tool that connects a single physical termnal between several shell processe. SO bascially you can have separate shell instances running on the same physical terminal.
+							</p>
+                        </article>
+                        </div>
+                </header>
+					<!-- </div> -->
+
+				<!-- Footer -->
+					<footer id="footer">
+						<!--<p class="copyright">&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</p> -->
+					</footer>
+			</div>
+
+		<!-- BG -->
+			<div id="bg"></div>
+
+		<!-- Scripts -->
+        <script src="../../assets/js/jquery.min.js"></script>
+        <script src="../../assets/js/browser.min.js"></script>
+        <script src="../../assets/js/breakpoints.min.js"></script>
+        <script src="../../assets/js/util.js"></script>
+        <script src="../../assets/js/main.js"></script>
+	</body>
+</html>

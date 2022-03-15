@@ -18,7 +18,7 @@
 			text-align: left;
             padding: 4.5rem 2.5rem 1.5rem 2.5rem ;
 			position: relative;
-			width: 55rem;
+			width: 50rem;
 			max-width: 100%;
 			background-color: rgba(27, 31, 34, 0.85);
 			border-radius: 4px;
@@ -34,8 +34,6 @@
 				margin-top: 2.5%;
 				margin-bottom: 2.5%;
 				display: block;
-  				margin-left: auto;
-  				margin-right: auto;
 				max-width: 100%;
 			}
 			code{
@@ -58,7 +56,7 @@
 							<h2 class="major">HTB - HORIZONTALL</h2>
 							Horizontall contains two web application vulnerabilities. The first is a strapi vulnerability which enabled us to reset the admin password and perform RCE to get a shell. 
 							The second web application vulnerability was used elevate our privileges to root<br><br>
-							---------------------------------------------------------------------------------------------
+							----------------------------------------------------------
 							</p>
 							<p>
 								<h3>Scanning and Reconnaissance</h3>
@@ -113,7 +111,7 @@ Nmap done: 1 IP address (1 host up) scanned in 136.58 seconds</code></pre>
 								<img src="./img/horizontall/strapi_prompt_rce.png" class="centerimage"/>
 								Back to our computer, on our listener we have...
 								<img src="./img/horizontall/listener_for_strapi_exploit.png" class="centerimage" width="50%"/>
-								As, you can see we successfully gotten a connection back on our listener. To spawn a proper shell use the command;<code>$ /usr/bin/script -qc /bin/bash /dev/null</code>. Now we should have enough privileges
+								We successfully gotten a connection back on our listener. To spawn a proper shell use the command;<code>$ /usr/bin/script -qc /bin/bash /dev/null</code>. Now we should have enough privileges
 								to read the contents of the /home directory and get the user FLAG. Let's check...
 								<img src="./img/horizontall/user_flag.png" class="centerimage"/>
 								voila (lol), we got the user FLAG. Now we have to get the root FLAG. To get this flag we have to access the root directory and its content. But since we are still strapi user we cannot access the contents
