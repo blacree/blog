@@ -119,7 +119,7 @@ We've identified three services running on the machine. An SSH server, a Web ser
                             <pre><code>/wp-content/plugins/ebook-download/filedownload.php?ebookdownloadurl=/home/user/.ssh/id_rsa</code></pre>
                             <img src="img/backdoor/id_rsa_result.png" class="centerimage"/>
                             As you can see, we got nothing useful.<br><br>
-                            Next let's see if we can identify the service running on port 1337. Using the same PoC let's get the <code>/proc/net/sched_debug</code> file. This file shows us running processes on a machine. After analyzing it's content, there is an interesting...
+                            Next let's see if we can identify the service running on port 1337. Using the same PoC let's get the <code>/proc/net/sched_debug</code> file. This file shows us running processes on a machine. After analyzing it's content, there is an interesting process...
                             <img src="img/backdoor/gdbserver_found.png" class="centerimage"/>
                             Let's get the file <code>/proc/net/68218/cmdline</code>. This file can be used to identify the port that the process "68218" is running on...
                             <img src="img/backdoor/port_identified_from_process.png" class="centerimage"/>
@@ -135,8 +135,13 @@ We've identified three services running on the machine. An SSH server, a Web ser
                             <h3>Privilege Escalation</h3>
                             The first thing to check for privilege escalation is the files that contain SUID bit. we have...
                             <img src="img/backdoor/SUID_info.png" class="centerimage"/>
-                            It appears the "screen" utility has this bit set. The "screen" utility is a tool that connects a single physical termnal between several shell processe. SO bascially you can have separate shell instances running on the same physical terminal.
+                            It appears the "screen" utility has this bit set. The "screen" utility is a tool that connects a single physical terminal between several shell processes. So bascially you can have separate shell instances running on the same physical terminal.<br><br>
+                            To get a root shell run the following commands...
+                            <img src="img/backdoor/priv_escalation.png" class="centerimage"/>
+                            <img src="img/backdoor/priv_escalation_success.png" class="centerimage"/>
+                            SUCCESS, we now have a root shell and can view the root FLAG.
 							</p>
+                            <p style="text-align: center;">Thank you for reading my writeup 😀 <a href="../../index.html" style="color: #FFA500;">| Home</a></p>
                         </article>
                         </div>
                 </header>
