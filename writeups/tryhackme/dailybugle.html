@@ -1,0 +1,150 @@
+<!DOCTYPE HTML>
+<!--
+	Dimension by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Blacree - DailyBugle</Box></title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="../../assets/css/noscript.css" /></noscript>
+        <style type="text/css">
+            #middle{
+			font-family: Liberation Mono;
+			font-size: 0.9rem;
+			text-align: left;
+            padding: 4.5rem 2.5rem 1.5rem 2.5rem ;
+			position: relative;
+			width: 50rem;
+			max-width: 100%;
+			background-color: rgba(27, 31, 34, 0.85);
+			border-radius: 4px;
+            }
+			.img{display: block;
+  				margin-left: auto;
+  				margin-right: auto;
+  				width: 100%;
+				margin-top: 2.5%;
+				margin-bottom: 2.5%;
+			}
+			.displayimage{
+				margin-top: 2.5%;
+				margin-bottom: 2.5%;
+				display: block;
+				max-width: 100%;
+			}
+			code{
+				margin-top: 2.5%;
+				margin-bottom: 2.5%;
+			}
+        </style>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+                <header id="header">
+				<!-- Main -->
+					<!-- <div class="content"> -->
+                        <div id="middle">
+                        <article>
+                            <a href="../../index.html"><h2 style="text-align: right; color: gray;">Home</h2></a>
+                            <p>
+							<h2 class="major">HTB - Daily-Bugle</h2>
+                            <img src="img/dailybugle/logo.png" class="img"/>
+							More to come...<br><br>
+							----------------------------------------------------------
+							</p>
+							<p>
+								<h3>Scanning and Enumeration</h3>
+								Using NMAP to scan the host, we have...
+                                <pre><code>nmap -p- --min-rate=1000 -sC -A $dailybugle
+Starting Nmap 7.92 ( https://nmap.org ) at 2022-03-09 20:56 WAT
+Warning: 10.10.190.155 giving up on port because retransmission cap hit (10).
+Nmap scan report for 10.10.190.155
+Host is up (0.22s latency).
+Not shown: 51485 closed tcp ports (conn-refused), 14047 filtered tcp ports (no-response)
+PORT     STATE SERVICE VERSION
+22/tcp   open  ssh     OpenSSH 7.4 (protocol 2.0)
+| ssh-hostkey: 
+|   2048 68:ed:7b:19:7f:ed:14:e6:18:98:6d:c5:88:30:aa:e9 (RSA)
+|   256 5c:d6:82:da:b2:19:e3:37:99:fb:96:82:08:70:ee:9d (ECDSA)
+|_  256 d2:a9:75:cf:2f:1e:f5:44:4f:0b:13:c2:0f:d7:37:cc (ED25519)
+80/tcp   open  http    Apache httpd 2.4.6 ((CentOS) PHP/5.6.40)
+|_http-generator: Joomla! - Open Source Content Management
+| http-robots.txt: 15 disallowed entries 
+| /joomla/administrator/ /administrator/ /bin/ /cache/ 
+| /cli/ /components/ /includes/ /installation/ /language/ 
+|_/layouts/ /libraries/ /logs/ /modules/ /plugins/ /tmp/
+|_http-title: Home
+|_http-server-header: Apache/2.4.6 (CentOS) PHP/5.6.40
+3306/tcp open  mysql   MariaDB (unauthorized)
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 333.68 seconds</code></pre>
+                                We have an ssh server, web server and a SQL server running on the host. Let's check the web server...<br><br>
+                                <h4>Web Server - TCP 80</h4>
+                                Loading the web page, we get...
+                                <img src="img/dailybugle/home_page.png" class="displayimage"/>
+                                Let's perform directory bruteforcing on the application using gobuster. We have...
+                                <img src="img/dailybugle/gobuster_result.png" class="displayimage"/>
+                                There is an administrator path, let's visit it;
+                                <img src="img/dailybugle/joomla_admin_login_page.png" class="displayimage"/>
+                                It is a joomla managed application, let's get the version. Joomla websites since version 1.6.0 have an easy method that reveals
+                                their version, all you need to do is access the URL...
+                                <pre><code>http://www.[thejoomlawebsite].com/administrator/manifests/files/joomla.xml</code></pre>
+                                This typically works for versions of joomla from 1.6.0 until 3.7.x. After accessing it, we get...
+                                <img src="img/dailybugle/joomla_version.png" class="displayimage"/>
+                                We have Joomla <code>version 3.7.0</code> running on the web application. SQL injection vulnerability found for this version on
+                                <code>https://blog.sucuri.net/2017/05/sql-injection-vulnerability-joomla-3-7.html</code>. 
+                                <pre><code>PoC: http://[joomla_site]/index.php?option=com_fields&view=fields&layout=modal&list[fullordering]=[sql_code]</code></pre>
+                                Using the url...
+                                <pre><code>http://[ip_address]/index.php?option=com_fields&view=fields&layout=modal&list[fullordering]=(SELECT * FROM (SELECT(SLEEP(30)))GDiu)</code></pre>
+                                confirms the vulnerability as it takes the web application 30 seconds to reply.<br><br>
+                                <h3>Exploiting the SQL Injection vulnerability</h3>
+                                Python exploit found for this vulnerability on <code>https://github.com/stefanlucas/Exploit-Joomla</code>. Running the exploit we have...
+                                <img src="img/dailybugle/joomla_python_exploit.png" class="displayimage"/>
+                                Using hashcat and popular wordlist rockyou.txt to crack the password, we have...
+                                <img src="img/dailybugle/password_cracked_main.png" class="displayimage"/>
+                                With the cracked password, let's try logging into the admin login we found earlier. We have...
+                                <img src="img/dailybugle/home_admin_page.png" class="displayimage"/>
+                                Successful, we are super user. let's try exploiting the endpoint, preferably to get a shell.<br><br>
+                                Looking through the internet, <code>https://www.hackingarticles.in/joomla-reverse-shell/</code> explains how to get a reverse shell using the administrator endpoint
+                                we have access to after post-exploitation.
+                                <img src="img/dailybugle/bee3z_template.png" class="displayimage"/>
+                                From the image above, select Extensions, under "Templates" select "Templates"; then select the "Beez3" template edit the "index.php" file for the template, swapping the
+                                code there with your php reverse shellcode. To run the file, select "Template Preview" at the top of the page. On our listener we have...
+                                <img src="img/dailybugle/successfull_shell.png" class="displayimage"/>
+                                Great, we have a shell &#128513;.<br><br>
+                                Although, we got a shell, we are not a normal user. We are the web application user "apache". Looking around the file system in the <code>/var/www/html</code> directory we have
+                                a file called <code>configuration.php</code>. In it contains SQL login information, using the password to login for user "jjameson" in the home directory we successfully get a shell
+                                and can view the user FLAG...
+                                <img src="img/dailybugle/jjameson_shell.png" class="displayimage"/>
+                                <h3>Privilege Escalation</h3>
+							</p>
+                        </article>
+                        </div>
+                </header>
+					<!-- </div> -->
+
+				<!-- Footer -->
+					<footer id="footer">
+						<!--<p class="copyright">&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</p> -->
+					</footer>
+			</div>
+
+		<!-- BG -->
+			<div id="bg"></div>
+
+		<!-- Scripts -->
+			<script src="../../assets/js/jquery.min.js"></script>
+			<script src="../../assets/js/browser.min.js"></script>
+			<script src="../../assets/js/breakpoints.min.js"></script>
+			<script src="../../assets/js/util.js"></script>
+			<script src="../../assets/js/main.js"></script>
+
+	</body>
+</html>
