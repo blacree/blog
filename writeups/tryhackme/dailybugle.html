@@ -55,7 +55,9 @@
                             <p>
 							<h2 class="major">HTB - Daily-Bugle</h2>
                             <img src="img/dailybugle/logo.png" class="img"/>
-							More to come...<br><br>
+							Daily-Bugle has running a web application which is vulnerable to sql injection. This is leveraged to get a shell.
+							Information found on the machine is then used to elevate privileges to a legitimate user; whereas the sudo utility is used to
+							elevate privileges to root.<br><br>
 							----------------------------------------------------------
 							</p>
 							<p>
@@ -124,7 +126,15 @@ Nmap done: 1 IP address (1 host up) scanned in 333.68 seconds</code></pre>
                                 and can view the user FLAG...
                                 <img src="img/dailybugle/jjameson_shell.png" class="displayimage"/>
                                 <h3>Privilege Escalation</h3>
+								Checking for binaries with SUID bit; nothing of interest except "SUDO". Let's view the user privileges configured...
+								<img src="img/dailybugle/sudo_privs.png" class="displayimage"/>
+								This shows that user <code>jjameson</code> has sudo access to <code>yum</code> binary. How to escalate privilege using the yum binary through sudo found on gtfobins; <code>https://gtfobins.github.io/gtfobins/yum/#sudo </code>.
+								Gtfobins is a curated list of Unix binaries that can be used to bypass local security restrictions in misconfigured systems.<br><br>
+								Run the following commands...
+								<img src="img/dailybugle/privesc_code_successfull.png" class="displayimage"/>
+								SUCCESS, we now have a root shell and can view the root FLAG.
 							</p>
+							<p style="text-align: center;">Thank you for reading my writeup 😀 <a href="../../index.html" style="color: #FFA500;">| Home</a></p>
                         </article>
                         </div>
                 </header>
