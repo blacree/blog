@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<!--
+	Dimension by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Blacree - Web-application vulnerabilities</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="../../assets/css/noscript.css" /></noscript>
+        <style type="text/css">
+            #middle{
+			font-family: Liberation Mono;
+			font-size: 0.9rem;
+			text-align: left;
+            padding: 4.5rem 2.5rem 1.5rem 2.5rem ;
+			position: relative;
+			width: 50rem;
+			max-width: 100%;
+			background-color: rgba(27, 31, 34, 0.85);
+			border-radius: 4px;
+            }
+			.img{display: block;
+  				margin-left: auto;
+  				margin-right: auto;
+  				width: 100%;
+				margin-top: 2.5%;
+				margin-bottom: 2.5%;
+			}
+			.displayimage{
+				margin-top: 2.5%;
+				margin-bottom: 2.5%;
+				display: block;
+				max-width: 100%;
+			}
+			code{
+				margin-top: 2.5%;
+				margin-bottom: 2.5%;
+			}
+            hr{
+                margin-top: 2.5%;
+                margin-bottom: 6.0%;
+                border-color: gray;
+            }
+        </style>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+                <header id="header">
+				<!-- Main -->
+					<!-- <div class="content"> -->
+                        <div id="middle">
+                        <article>
+                            <h3 style="text-align: right; color: gray;">Last Updated on April 12th, 2022 | <a href="../../index.html">Home</a></h3>
+                            <p>
+							<h2 class="major">Web Application Vulnerabilities</h2>
+                            <img src="img/webappvulns/web-application-security.png" class="img"/>
+                            A website vulnerability is a misconfiguration, software code flaw, bug or some other weakness in the web application
+                            or its components and processes. These vulnerabilities enable attackers to gain unauthorized access to systems,
+                            processes or even mission critical assets of an organization. With such access an attacker can takeover applications,
+                            engage in privilege escalation to exfiltrate data, orchestrate attacks or even cause large-scale service disruption and
+                            much more.<br><br>
+							The Goal of this write-up is to give concise explanation with scenarios and practical examples of known
+                            vulnerabilities that plague web applications; so as to expose technological inclined enthusiasts, especially newbies in penetration testing to these
+                            vulnerabilities.<br><br>
+                            <h3 style="color: gray;">Sections:</h3>
+                            <a href="#ssv" style="color: #FFA500;">- SERVER SIDE VULNERABILITIES</a><br>
+                            <a href="#csv" style="color: #FFA500;">- CLIENT SIDE VULNERABILITIES</a><br>
+                            <a href="#others" style="color: #FFA500;">- ADVANCED TOPICS (OTHERS)</a>
+                            <br><br>
+                            <hr>
+							</p>
+							<p>
+								<h3 id="ssv">SERVER SIDE VULNERABILITIES</h3>
+                                In a client-server model, a server-side refers to programs and operations that run on the server. Typically a server is a computer application, such
+                                as a web server, that runs on a remote computer, reachable from a user's local computer, smartphone or other devices. As the name implies server side vulnerabilities
+                                are therefore flaws present in the server-side of a client-server model that can be exploited by attackers. Server side vulnerabilities known to web applications include:
+                                <ul type="circle">
+                                    <li><a href="#sql" style="color: #FFA500;">SQL Injection</a></li>
+                                    <li><a style="color: #FFA500;">Authentication</a></li>
+                                    <li><a style="color: #FFA500;">Directory Traversal</a></li>
+                                    <li><a style="color: #FFA500;">(OS) Command Injection</a></li>
+                                    <li><a style="color: #FFA500;">Business Logic Vulnerabilities</a></li>
+                                    <li><a style="color: #FFA500;">Information Disclosure</a></li>
+                                    <li><a style="color: #FFA500;">Access Control Vulnerabilities</a></li>
+                                    <li><a style="color: #FFA500;">File Upload Vulnerabilities</a></li>
+                                    <li><a style="color: #FFA500;">Server-side Request Forgery (SSRF)</a></li>
+                                    <li><a style="color: #FFA500;">XML External Entity (XXE) Injection</a></li>
+                                </ul>
+                                <h4 id="sql">-SQL Injection</h4>
+                                SQL Injection is a type of vulnerability that allows an attacker to interfere with the queries that an application makes to its database,
+                                allowing the attacker to view data that they are not normally able to retrieve. This can result in unauthorized access to sensitive data such as passwords, personal user information
+                                or credit card details. In many cases, an attacker can modify or delete this data, causing damage to changes to the application's content or behavior and in some situations an attacker
+                                can escalate an SQL Injection attack to compromise the underliying server or other back-end infrastructure.<br><br>
+                                Identifying the attack surface:-
+                                
+							</p>
+							<p style="text-align: center;">Thank you for reading my writeup 😀 <a href="../../index.html" style="color: #FFA500;">| Home</a></p>
+                        </article>
+                        </div>
+                </header>
+					<!-- </div> -->
+
+				<!-- Footer -->
+					<footer id="footer">
+						<!--<p class="copyright">&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</p> -->
+					</footer>
+			</div>
+
+		<!-- BG -->
+			<div id="bg"></div>
+
+		<!-- Scripts -->
+			<script src="../../assets/js/jquery.min.js"></script>
+			<script src="../../assets/js/browser.min.js"></script>
+			<script src="../../assets/js/breakpoints.min.js"></script>
+			<script src="../../assets/js/util.js"></script>
+			<script src="../../assets/js/main.js"></script>
+
+	</body>
+</html>
