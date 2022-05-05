@@ -30,6 +30,15 @@
 				margin-top: 2.5%;
 				margin-bottom: 2.5%;
 			}
+			.main_heading{
+				border-bottom: solid 1px #ffffff;
+				width: -moz-max-content;
+				width: -webkit-max-content;
+				width: -ms-max-content;
+				width: max-content;
+				padding-bottom: 0.5rem;
+				margin: 0 0 2rem 0;
+			}
 			.displayimage{
 				margin-top: 2.5%;
 				margin-bottom: 2.5%;
@@ -59,46 +68,274 @@
                             <h3 style="text-align: right; color: gray;">Last Updated on April 12th, 2022 | <a href="../../index.html">Home</a></h3>
                             <p>
 							<h2 class="major">Web Application Vulnerabilities</h2>
+							<!-- <hr style="margin-top: 0.1rem; margin-bottom: 2rem; border-bottom: solid 1px #ffffff;;"> -->
                             <img src="img/webappvulns/web-application-security.png" class="img"/>
-                            A website vulnerability is a misconfiguration, software code flaw, bug or some other weakness in the web application
+                            A web application vulnerability is a misconfiguration, software code flaw, bug or some other weakness in a web application
                             or its components and processes. These vulnerabilities enable attackers to gain unauthorized access to systems,
                             processes or even mission critical assets of an organization. With such access an attacker can takeover applications,
                             engage in privilege escalation to exfiltrate data, orchestrate attacks or even cause large-scale service disruption and
-                            much more.<br><br>
-							The Goal of this write-up is to give concise explanation with scenarios and practical examples of known
+                            much more.
+							<br><br>
+							The aim of this write-up is to give concise explanation with practical and easy to understand examples of known
                             vulnerabilities that plague web applications; so as to expose technological inclined enthusiasts, especially newbies in penetration testing to these
-                            vulnerabilities.<br><br>
+                            vulnerabilities.
+							<br><br>
                             <h3 style="color: gray;">Sections:</h3>
-                            <a href="#ssv" style="color: #FFA500;">- SERVER SIDE VULNERABILITIES</a><br>
-                            <a href="#csv" style="color: #FFA500;">- CLIENT SIDE VULNERABILITIES</a><br>
-                            <a href="#others" style="color: #FFA500;">- ADVANCED TOPICS (OTHERS)</a>
+                            <a href="#ssv">- SERVER SIDE VULNERABILITIES</a><br>
+                            <a href="#csv">- CLIENT SIDE VULNERABILITIES</a><br>
+                            <a href="#others">- ADVANCED TOPICS (OTHERS)</a>
                             <br><br>
                             <hr>
 							</p>
 							<p>
 								<h3 id="ssv">SERVER SIDE VULNERABILITIES</h3>
                                 In a client-server model, a server-side refers to programs and operations that run on the server. Typically a server is a computer application, such
-                                as a web server, that runs on a remote computer, reachable from a user's local computer, smartphone or other devices. As the name implies server side vulnerabilities
+                                as a web server, that runs on a remote computer that is reachable from a user's local computer, smartphone or other devices. As the name implies server side vulnerabilities
                                 are therefore flaws present in the server-side of a client-server model that can be exploited by attackers. Server side vulnerabilities known to web applications include:
                                 <ul type="circle">
                                     <li><a href="#sql" style="color: #FFA500;">SQL Injection</a></li>
-                                    <li><a style="color: #FFA500;">Authentication</a></li>
-                                    <li><a style="color: #FFA500;">Directory Traversal</a></li>
-                                    <li><a style="color: #FFA500;">(OS) Command Injection</a></li>
-                                    <li><a style="color: #FFA500;">Business Logic Vulnerabilities</a></li>
-                                    <li><a style="color: #FFA500;">Information Disclosure</a></li>
-                                    <li><a style="color: #FFA500;">Access Control Vulnerabilities</a></li>
-                                    <li><a style="color: #FFA500;">File Upload Vulnerabilities</a></li>
-                                    <li><a style="color: #FFA500;">Server-side Request Forgery (SSRF)</a></li>
-                                    <li><a style="color: #FFA500;">XML External Entity (XXE) Injection</a></li>
+                                    <li><a href="#authentication" style="color: #FFA500;">Authentication</a></li>
+                                    <li><a href="#directory_traversal" style="color: #FFA500;">Directory Traversal</a></li>
+                                    <li><a href="#command_injection" style="color: #FFA500;">(OS) Command Injection</a></li>
+                                    <li><a href="#business_logic_vulnerabilities" style="color: #FFA500;">Business Logic Vulnerabilities</a></li>
+                                    <li><a href="#information_disclosure" style="color: #FFA500;">Information Disclosure</a></li>
+                                    <li><a href="#access_control_vulnerabilities" style="color: #FFA500;">Access Control Vulnerabilities</a></li>
+                                    <li><a href="#file_upload_vulnerabilities" style="color: #FFA500;">File Upload Vulnerabilities</a></li>
+                                    <li><a href="#ssrf" style="color: #FFA500;">Server-side Request Forgery (SSRF)</a></li>
+                                    <li><a href="#xxe_injection" style="color: #FFA500;">XML External Entity (XXE) Injection</a></li>
                                 </ul>
-                                <h4 id="sql">-SQL Injection</h4>
+
+                                <h3 id="sql" style="color: #FFA500;">-SQL Injection</h3>
                                 SQL Injection is a type of vulnerability that allows an attacker to interfere with the queries that an application makes to its database,
-                                allowing the attacker to view data that they are not normally able to retrieve. This can result in unauthorized access to sensitive data such as passwords, personal user information
-                                or credit card details. In many cases, an attacker can modify or delete this data, causing damage to changes to the application's content or behavior and in some situations an attacker
-                                can escalate an SQL Injection attack to compromise the underliying server or other back-end infrastructure.<br><br>
-                                Identifying the attack surface:-
-                                
+                                allowing the attacker to interact with data they are not normally able to retrieve. It involves placement of malicious code in SQL statements, via web page input;
+								this can result in unauthorized access to sensitive data such as passwords, personal user information or credit card details. 
+								In many cases, an attacker can modify or delete this data, causing damage to changes to the application's content or behavior and in some situations an attacker
+                                can escalate an SQL Injection attack to compromise the underliying server or other back-end infrastructure.
+								<br><br>
+                                <u>Identifying the attack surface</u><br>
+                                SQL Injection are found potentially in areas of a web application where user input is used directly in an SQL query to interact with the database. This could be areas such
+								a login form or the search functionality of a web application.
+								<br><br>
+								<u>Example:</u><br>
+								<img src="img/webappvulns/sqli.png" class="displayimage">
+								This is a simple form of sql injection. During login the vulnerable application makes the following sql query to its database...
+								<pre><code>select username,pass from users where username='[user_input]' and password='[user_input]'</code></pre>
+								This query checks the database to verify if there is indeed a username and password that match with the values supplied by the user, if true the login is successful.
+								But because the input supplied by the user is not properly validated, the query becomes...
+								<pre><code>select username,pass from users where username='admin' and password='password' OR '1'='1'--</code></pre>
+								This tells the database to return a user where username is 'admin' and password is 'password' or where admin is true; allowing the attacker to login as admin even if
+								the password is wrong.
+								<br><br>
+								<!-- <u>Tools</u>
+								<ul type="circle">
+									<li>SQL Map</li>
+									<li>Burp Suite's Web Vulnerability Scanner</li>
+								</ul> -->
+
+								<h3 id="authentication" style="color: #FFA500;">-Authentication</h3>
+								Authentication is the process of verifying the identify of a given user or client. In short, it involves making sure that ehy really are who they claim to be before given access
+								to a particular resource. Robust authentication mechanisms are an integral aspect of effective web security as websites are in part exposed to anyone who is connected to the internet by
+								design. Authentication in web applications can be categorized into three categories:
+								<ol type="I" style="margin-left: 0.8rem;">
+									<li>Something you know; like a password or security question</li>
+									<li>Something you have; such as a security token</li>
+									<li>Something you are or do; this can be your biometrics such as your fingerprint</li>
+								</ol>
+								Authentication vulnerabilities arise due to logic flaws or poor coding implementation in a web application. They can also arise when applications fail to protect against certain
+								attack vectors, such as brute-force attacks. Some common authentication vulnerabilities include:
+								<ul type="circle">
+									<li>
+										User Enumeration: This is probably the most common authentication vulnerability. It is also usually one of the quickest and easiest to prevent.
+										It is mainly due to different error messages being presented back to the end user when an invalid user attempts to authenticate with the application compared to that of an
+										attempt made by a valid user.
+									</li>
+									<li>Weak Password Policy: This happens when a web application allows its users to set weak passwords, as a password's strength is a measure of the effectiveness it provides
+										in resisting guessing and brute-force attacks.
+									</li>
+									<li>
+										Non-implemented Brute-Force Protection: A common attack against authentication pages is brute-force attack. A brute-force attack for example, is when an attacker attempts
+										multiple usernames and passwords until they obtain access to a valid account. This type of attack is easier to perform if the application has a user enumeration or weak password
+										policy. An application is prone to this attack when it fails to protect itself from it through methods such as implementing a strict IP-based user rate limiter.
+									</li><br>
+									Others include broken password reset systems, lack of additional security measures such as Two-Factor Authentication(2FA) and much more.
+								</ul>
+
+								<h3 id="directory_traversal" style="color: #FFA500;">-Directory Traversal</h3>
+								Directory traversal, also known as file path traversal is a vulnerability that allows an attacker to read arbitrary files on the server. This might include application code, data,
+								crednetials for back-end systems, and sensitive operating system files. Directory traversal is casued by insufficient security validation or sanitization of user-supplied file names,
+								such that the supplied characters allows the attacker to break out of the web server's root directory and access other locations through the operating system's file system API.
+								<br><br>
+								<u>Identifying the attack surface</u><br>
+								As the name suggest directory traversal vulnerabilities are found in areas of a web application where files contained on the server's file system are accessed in way or the other and are
+								user-controllable.
+								<br><br>
+								<u>Example:</u>
+								<img src="img/webappvulns/directory_traversal.png" class="displayimage">
+								What this php code does is that by default it returns a file in the templates directory called "red.php". But it also checks to determine if the <code>"COOKIE"</code> header of the request that was made to the server has a
+								<code>TEMPLATE</code> field. If it does the <code>$template</code> variable is automatically set to the passed value. The variable is then concatenated to the intended file path. Because no proper checks (such as blacklisting)
+								or input validation is performed on the data returned by the <code>TEMPLATE</code> field of the <code>COOKIE</code> header, an attack against the system could be to send the following HTTP request...
+								<pre><code>GET /default.php HTTP/1.0
+Cookie: TEMPLATE=../../../../../etc/passwd</code></pre>
+								This would result in the server returning the contents of the passwd file of the linux file system instead of the files contained in the intended path of the php code.
+								<br><br>
+								<!--<u>Tools</u>
+								<ul type="circle">
+									<li>DotDotPwn</li>
+									<li>WFuzz</li>
+								</ul> -->
+
+								<h3 id="command_injection" style="color: #FFA500;">-(OS) Command Injection</h3>
+								OS Command Injection is an attack that involves executing arbitrary commands on a host operating system. Unlike code injection which involves injection of code interpreted
+								or executed by the application, for instance injecting php code into an application; command injection involves executing commands in a system shell or other parts of the environment. Here the
+								attacker extends the default functionality of a vulnerable application causing it to pass commands to the system shell.
+								<br><br>
+								<u>Identifying the attack surface</u><br>
+								Command Injection are found in areas of the application that invoke external commands, i.e any command that is not part of the application and is therefore external to the application. Any of
+								the following scenarios can cause command injection vulnerabilities:
+								<ul type="circle">
+									<li>The application invokes a system shell to execute an external command and passes untrusted data as an argument to the external command.</li>
+									<li>The application uses untrusted data to determine which external command to execute</li>
+									<li>The application passes untrusted data to an external command, and the external command will invoke additional commands based on untrusted data.</li>
+								</ul>
+								<u>Example:</u>
+								<img src="img/webappvulns/command_injection.png" class="displayimage">
+								This javascript code takes the value of the <code>file</code> query that is passed to the <code>/logs</code> endpoint. This value is then used in the <code>exec</code> function
+								to execute the command; <code>git log --oneline ${file}</code>. Since there is no proper validation or authorization checks done during the process, an attacker can perform command
+								injection by simply making the following request...
+								<pre><code>https://[domain]/logs?file=[filename];[command]</code></pre>
+								When a shell sees a semicolon (;) in a command, it is treated as a command separator -- bascially like pressing the ENTER key to execute another command. This essentially enables the attacker
+								to execute any command or commands of his choice thereby leading to command injection.
+								<br><br>
+
+								<h3 id="business_logic_vulnerabilities" style="color: #FFA500;">-Business Logic Vulnerabilities</h3>
+								Business logic vulnerabilities are flaws in the design and implementation of an application that allows an attacker to elicit unintended behavior. It involves ways of manipulating a legitimate
+								functionality or processing flow of an application so as to achieve a malicious goal. These flaws are generally the result of failing to anticipate and handle safely unusual application states
+								that may occur. Commonly referred to as Logic flaws they are often invisible to people who aren't explicitly looking for them as they typically won't be exposed by the normal use of the application.
+								The attacker, however may be able to exploit behavioral quirks by interacting with the application in ways that developers never intended.<br><br>
+								<u>Identifying the attack surface</u><br>
+								Business logic vulnerabilities typically cannot be scanned for as this type of vulnerability is different from other types of vulnerability, which makes it difficult to apply any kind of categorization
+								scheme because it varies depending on the business domain that the application serves. You need to properly understand the intended purpose and the business logic of the application to be able to 
+								spot the logic flaws when testing the application.
+								<br><br>
+								<u>Example:</u>
+								<img src="img/webappvulns/blv_product_to_buy.png" class="displayimage">
+								The products shown in the image can be bought from a shopping application which has a business logic flaw. This allows as an attacker to purchase the first product (Leather Jacket)
+								which costs <code>$1337.00</code> for a very low price. He does this by modifying the Add to cart POST request of the second product (Safety First)...
+								<img src="img/webappvulns/blv_post_negative_product_quantity.png" class="displayimage">
+								<img src="img/webappvulns/blv_negative_total.png" class="displayimage">
+								Because the attacker is able to change the value of the <code>quantity</code> parameter in the post request to negative eighteen (-18), he is able to infer a negative price of <code>-$1315</code>.
+								Adding the Leather Jacket to cart we have...
+								<img src="img/webappvulns/blv_positive_total.png" class="displayimage">
+								Because of the logic flaw in the application the attacker is able to purchase the Jacket for as low as <code>$21.02</code>.
+								<br><br>
+
+								<h3 id="information_disclosure" style="color: #FFA500;">-Information Disclosure</h3>
+								Also known as information leakage, information disclosure occurs when a website unintentionally reveals sensitive information to its users as a result of its failure to protect sensitive
+								information like passwords, financial information, health data or even technical details about the website and its infrastructure. Although some of this information will be of limited user,
+								it can potentially be a starting point for exposing an additonal attack surface, which may contain other interesting vulnerabilities. The information disclosed could even provide answers to
+								the attacker when trying to construct complex, high-severity attacks.
+								<br><br>
+								Some examples of infomration disclosure include:
+								<ul type="circle">
+									<li>Harcoding sensitive data like tokens, secret_keys, passwords in the source code.</li>
+									<li>Transmitting sensitive information in plain text.</li>
+									<li>Using old or weak cryptographic algorithms.</li>
+									<li>Revealing the names, structure, contents of hidden directories via a robots.txt file or via directory listing.</li>
+									<li>Not implementing generic messages for error messages in the application, such as 404 or 505 responses.</li>
+									<li>Use of unsalted or simple hashes to store sensitive data.</li>
+								</ul>
+
+								<h3 id="access_control_vulnerabilities" style="color: #FFA500;">-Access Control Vulnerabilities</h3>
+								Access control, also known as authorization is the application of constraints on who (or what) can perform certain actions or access
+								resources that they have requested. Access control involves enforcing policies so as to prevent users from acting
+								outside of their intended permissions. In the context of web applications, access control is dependent on authentication and session management.
+								Authentication identifies the user and confirms that they are who they say they are while session management identifies which subsequent requests
+								are being made by that same user. Access control helps to determine if that user is permitted to make that intended request.
+								<br><br>
+								Broken access control can lead to unauthorized information disclosure, performing functions outside of the user's limits, modification and
+								destruction of data and even privilege escalation. Access control can be categorized into three:
+								<ol type="1" style="margin-left: 0.8rem;">
+									<li>
+										Horizontal access controls: horizontal access control mechanisms restrict access to resources for users who are specifically allowed to
+										access those resources. Here users have access to resources of the same type but only that which is meant specifically for them. For example,
+										a banking application let's a user view their transaction records but not that of other users.
+									</li>
+									<li>Vertical access controls: vertical access control mechanisms restrict access to sensitive functionality that is not available to
+										other types of users thereby making sure that different types of users have access to different application functions. For example, an
+										administrator might be able to modify or delete any user's account, while an ordinary user has no access to these actions.
+									</li>
+									<li>
+										Context-dependent access controls: context-dependent access controls prevent a user from performing actions in the wrong order. It restricts
+										access to functionality and resources based upon the state of the application during the user's interaction with it. For example, ensuring
+										that a multistep process is followed sequentially without any steps skipped.
+									</li>
+								</ol>
+								The simplest example of an access control vulnerability is when an unauthenticated user or non-admin user has access to a page that requires admin
+								privileges. Although links to these types of pages are typically not included in the web application, they can be found through directory brute-forcing
+								by attackers.
+								<br><br>
+
+								<h3 id="file_upload_vulnerabilities" style="color: #FFA500;">-File Upload Vulnerabilities</h3>
+								A file upload is the transmission of a file from one computer system to another. A file upload vulnerability occurs when a web server allows users to 
+								upload files to its filesystem without sufficiently validating the file's properties such as the file's name, type, size and contents. Failing to enforce
+								restrictions enables attackers to upload potentially dangerous files instead. In the worst case scenario, an attacker can potentially upload a server-side
+								script which functions as a web shell, effectively granting the attacker full control over the server.
+								<br><br>
+								<u>Identifying the attack surface</u><br>
+								As the name suggests file upload Vulnerabilities are found in areas of a web application that allows users to upload (transmit) files to its file system.
+								The impact of a file upload vulnerability depends on what restrictions are imposed on the file once it has been successfully uploaded.
+								<br><br>
+								<u>Example:</u><br>
+								A web application implements a weak validation mechanisms for its file upload functionality as it uses only the <code>Content-Type</code> header of the 
+								http request to determine the type of file being uploaded so as to permit only jpeg and png images. An attacker trying to upload a shell instead makes the
+								following request...
+								<img src="img/webappvulns/file_upload_vulnerability.png" class="displayimage">
+								Changing the <code>Content-Type</code> header to <code>image/jpeg</code> would effectively enable the attacker to bypass the validation mechanism and successfully
+								upload the web shell.
+								<br><br>
+								
+								<h3 id="ssrf" style="color: #FFA500;">-Server-side Request Forgery (SSRF)</h3>
+								SSRF is a web security vulnerability that enables an attacker to induce the server-side application to make requests to an unintended location as the server is 
+								essentially used as a proxy to relay the requests. Criminals usually use SSRF attacks to target internal systems that are behind firewalls and are not accessible 
+								from the external network or to access services available through the loopback interface (127.0.0.1) of the vulnerable server. In other cases an attacker may be 
+								able to force the server to connect to arbitrary external systems.
+								<br><br>
+								<u>Identifying the attack surface</u><br>
+								SSRF Vulnerabilities are typically found in areas of a web application functionality where the server is importing data from a URL, publishing data to a URL, or
+								otherwise reading data from a URL. If the functionality can be manipulated and modified by the attacker, it can be used to make requests to an unitended resource.
+								<br><br>
+								<u>Example:</u>
+								<img src="img/webappvulns/ssrf.png" class="displayimage">
+								In this image a web application is designed to use a POST request to communicate with an internally running website to get details about the amount of a product 
+								in stock. Since the request is user controllable, if there are no restrictions implemented in the web application an attacker can communicate with a locally running 
+								web server by changing the value of the <code>stockApi</code>
+								to...
+								<pre><code>stockApi=http://localhost/ OR http://127.0.0.1/</code></pre>
+								Asides from http:// and https:// URL schemas, an attacker may be able to take advantage of lesser-known or legacy URL schemas such as <code>file:///, dict://, ftp://, and gopher://</code> 
+								to access files on the local system or the internal network.
+								<br><br>
+
+								<h3 id="xxe_injection" style="color: #FFA500;">- XML External Entity (XXE) Injection</h3>
+								The Extensible Markup Language (XML) is a markup language that is commonly used by web/mobile applications, word processors, content management platforms and 
+								word processors to store and transport data between computer systems. XML External Entity (XXE) on the other hand is an entirely valid but abusable feature of the
+								XML language as it is frequently enabled by default by standard XML parsers. XXE injection enables an attacker to interfere with an application's processing of XML data allowing the attacker to
+								read local files on the server, perform SSRF attacks (such as accessing internal networks and scaning internal ports) or execute commands on a remote server. In some cases
+								an attacker might be able to leverage XXE injection to exfiltrate data to an external server controlled by the attacker, or to perform denial of service.
+								<br><br>
+								<u>Identifying the attack surface</u><br>
+								XXE injection occurs when an XML input containing references to an external entity is processed by a weakly configured XML parser which has enabled various potentially
+								dangerous features that have not been disabled or validated in some way. XXE injection is therefore found in areas of a web application that makes use of XML to communicate with the web
+								server. The attacker takes advantage of it by embedding malicious inline DOCTYPE definition in the XML data. When the web server processes the malicious XML input, the entities get
+								expanded resulting in the intended action of the attacker being performed by the XML parser.
+								<br><br>
+								<u>Example:</u><br>
+								<img src="img/webappvulns/xxe_injection.png" class="displayimage">
+								Here the attacker is able to view the contents of a local file called <code>/etc/passwd</code> via the declared <code>SYSTEM</code> identifier.
+								The <code>SYSTEM</code> identifier is assumed to be a URI that can be accessed (dereferenced) by the XML processor when processing the entity. The XML processor
+								then replaced the occurrences of the named external entity <code>xxe</code>; with the contents accessed by the <code>SYSTEM</code> identifier.
+								<br><br>
+								<hr>
+								<h3 id="csv">CLIENT SIDE VULNERABILITIES</h3>
 							</p>
 							<p style="text-align: center;">Thank you for reading my writeup 😀 <a href="../../index.html" style="color: #FFA500;">| Home</a></p>
                         </article>
