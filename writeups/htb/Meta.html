@@ -55,7 +55,7 @@
 				<!-- Main -->
 					<!-- <div class="content"> -->
                         <div id="middle">
-                        <article>
+                        <article style="text-align: justify;">
                             <a href="../../index.html"><h2 style="text-align: right; color: gray;">Home</h2></a>
                             <p>
 							<h2 class="major">HTB - META</h2>
@@ -66,7 +66,7 @@
 							<hr>
 							</p>
 							<p>
-								<h3>Scanning and Enumeration</h3>
+								<h3 style="text-align: left;">Scanning and Enumeration</h3>
 								Starting with a NMAP scan we have...
 								<pre><code>$ nmap -p- --min-rate=1000 -sC -A -T4 $meta
 Nmap scan report for 10.10.11.140
@@ -105,7 +105,7 @@ HOP RTT       ADDRESS
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .             
 Nmap done: 1 IP address (1 host up) scanned in 279.72 seconds</code></pre>
 								We have two ports open on Meta. An ssh service and a web service. Let's test the webserver.<br><br>
-								<h4>Apache httpd - TCP 80</h4>
+								<h4 style="text-align: left;">Apache httpd - TCP 80</h4>
                                 <img src="img/meta/artcop_homepage.png" class="displayimage">
                                 Nothings of exploitable importance found on the site even after directory enumeration. Let's perform
                                 sub-domain enumeration...
@@ -129,7 +129,7 @@ Nmap done: 1 IP address (1 host up) scanned in 279.72 seconds</code></pre>
 								we get a shell...
 								<img src="img/meta/successful_shell.png" class="displayimage">
 								However, we are neither user nor root. Let's perform privilege escalation.<br><br>
-								<h4>User Privilege Escalation</h4>
+								<h4 style="text-align: left;">User Privilege Escalation</h4>
 								Searching for files that were created since the start of the year we have...
 								<img src="img/meta/exploit_found.png" class="displayimage">
 								This shows us a file called <code>convert_images.sh</code>. From its content we can see that a utility called "mogrify" which uses <code>ImageMagick v7.0.10-36</code>
@@ -150,7 +150,7 @@ Nmap done: 1 IP address (1 host up) scanned in 279.72 seconds</code></pre>
 								<img src="img/meta/thomas_private_key.png" class="displayimage"/>
 								Now let's ssh into the machine as user thomas and get the user flag...
 								<img src="img/meta/thomas_shell_success.png" class="displayimage"/><br>
-								<h4>Root Privilege Escalation</h4>
+								<h4 style="text-align: left;">Root Privilege Escalation</h4>
 								Listing sudo commands list, we have...
 								<img src="img/meta/sudo_list_permissions.png" class="displayimage">
 								User thomas can run a binary called neofetch as root without password. Executing neofetch as root we have...

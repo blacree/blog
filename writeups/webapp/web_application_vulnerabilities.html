@@ -55,8 +55,8 @@
 				<!-- Main -->
 					<!-- <div class="content"> -->
                         <div id="middle">
-                        <article>
-                            <h3 style="text-align: right; color: gray;">Last Updated on May 5th, 2022 | <a href="../../index.html">Home</a></h3>
+                        <article style="text-align: justify;">
+                            <h3 style="text-align: right; color: gray;">Last Updated on May 6th, 2022 | <a href="../../index.html">Home</a></h3>
                             <p>
 							<h2 style="text-align: center;">Web Application Vulnerabilities</h2>
 							<hr style="margin-top: 0.1rem; margin-bottom: 2rem; border-bottom: solid 1px #ffffff;;">
@@ -79,10 +79,10 @@
                             <hr>
 							</p>
 							<p>
-								<h3 id="ssv">SERVER SIDE VULNERABILITIES</h3>
+								<h3 id="ssv" style="text-align: left;">SERVER SIDE VULNERABILITIES</h3>
                                 In a client-server model, a server-side refers to programs and operations that run on the server. Typically a server is a computer application, such
                                 as a web server, that runs on a remote computer that is reachable from a user's local computer, smartphone or other devices. As the name implies server side vulnerabilities
-                                are therefore flaws present in the server-side of a client-server model that can be exploited by attackers. Server side vulnerabilities known to web applications include:
+                                are therefore flaws present in the server-side of a client-server model that can be exploited by attackers. Server-side vulnerabilities known to web applications include:
                                 <ul type="circle">
                                     <li><a href="#sql" style="color: #FFA500;">SQL Injection</a></li>
                                     <li><a href="#authentication" style="color: #FFA500;">Authentication</a></li>
@@ -96,7 +96,7 @@
                                     <li><a href="#xxe_injection" style="color: #FFA500;">XML External Entity (XXE) Injection</a></li>
                                 </ul>
 
-                                <h3 id="sql" style="color: #FFA500;">-SQL Injection</h3>
+                                <h3 id="sql" style="color: #FFA500; text-align: left;">-SQL Injection</h3>
                                 SQL Injection is a type of vulnerability that allows an attacker to interfere with the queries that an application makes to its database,
                                 allowing the attacker to interact with data they are not normally able to retrieve. It involves placement of malicious code in SQL statements, via web page input;
 								this can result in unauthorized access to sensitive data such as passwords, personal user information or credit card details. 
@@ -123,7 +123,7 @@
 									<li>Burp Suite's Web Vulnerability Scanner</li>
 								</ul> -->
 
-								<h3 id="authentication" style="color: #FFA500;">-Authentication</h3>
+								<h3 id="authentication" style="color: #FFA500; text-align: left;">-Authentication</h3>
 								Authentication is the process of verifying the identify of a given user or client. In short, it involves making sure that ehy really are who they claim to be before given access
 								to a particular resource. Robust authentication mechanisms are an integral aspect of effective web security as websites are in part exposed to anyone who is connected to the internet by
 								design. Authentication in web applications can be categorized into three categories:
@@ -151,7 +151,7 @@
 									Others include broken password reset systems, lack of additional security measures such as Two-Factor Authentication(2FA) and much more.
 								</ul>
 
-								<h3 id="directory_traversal" style="color: #FFA500;">-Directory Traversal</h3>
+								<h3 id="directory_traversal" style="color: #FFA500; text-align: left;">-Directory Traversal</h3>
 								Directory traversal, also known as file path traversal is a vulnerability that allows an attacker to read arbitrary files on the server. This might include application code, data,
 								crednetials for back-end systems, and sensitive operating system files. Directory traversal is casued by insufficient security validation or sanitization of user-supplied file names,
 								such that the supplied characters allows the attacker to break out of the web server's root directory and access other locations through the operating system's file system API.
@@ -175,7 +175,7 @@ Cookie: TEMPLATE=../../../../../etc/passwd</code></pre>
 									<li>WFuzz</li>
 								</ul> -->
 
-								<h3 id="command_injection" style="color: #FFA500;">-(OS) Command Injection</h3>
+								<h3 id="command_injection" style="color: #FFA500; text-align: left;">-(OS) Command Injection</h3>
 								OS Command Injection is an attack that involves executing arbitrary commands on a host operating system. Unlike code injection which involves injection of code interpreted
 								or executed by the application, for instance injecting php code into an application; command injection involves executing commands in a system shell or other parts of the environment. Here the
 								attacker extends the default functionality of a vulnerable application causing it to pass commands to the system shell.
@@ -198,7 +198,7 @@ Cookie: TEMPLATE=../../../../../etc/passwd</code></pre>
 								to execute any command or commands of his choice thereby leading to command injection.
 								<br><br>
 
-								<h3 id="business_logic_vulnerabilities" style="color: #FFA500;">-Business Logic Vulnerabilities</h3>
+								<h3 id="business_logic_vulnerabilities" style="color: #FFA500; text-align: left;">-Business Logic Vulnerabilities</h3>
 								Business logic vulnerabilities are flaws in the design and implementation of an application that allows an attacker to elicit unintended behavior. It involves ways of manipulating a legitimate
 								functionality or processing flow of an application so as to achieve a malicious goal. These flaws are generally the result of failing to anticipate and handle safely unusual application states
 								that may occur. Commonly referred to as Logic flaws they are often invisible to people who aren't explicitly looking for them as they typically won't be exposed by the normal use of the application.
@@ -220,7 +220,7 @@ Cookie: TEMPLATE=../../../../../etc/passwd</code></pre>
 								Because of the logic flaw in the application the attacker is able to purchase the Jacket for as low as <code>$21.02</code>.
 								<br><br>
 
-								<h3 id="information_disclosure" style="color: #FFA500;">-Information Disclosure</h3>
+								<h3 id="information_disclosure" style="color: #FFA500; text-align: left;">-Information Disclosure</h3>
 								Also known as information leakage, information disclosure occurs when a website unintentionally reveals sensitive information to its users as a result of its failure to protect sensitive
 								information like passwords, financial information, health data or even technical details about the website and its infrastructure. Although some of this information will be of limited user,
 								it can potentially be a starting point for exposing an additonal attack surface, which may contain other interesting vulnerabilities. The information disclosed could even provide answers to
@@ -236,7 +236,7 @@ Cookie: TEMPLATE=../../../../../etc/passwd</code></pre>
 									<li>Use of unsalted or simple hashes to store sensitive data.</li>
 								</ul>
 
-								<h3 id="access_control_vulnerabilities" style="color: #FFA500;">-Access Control Vulnerabilities</h3>
+								<h3 id="access_control_vulnerabilities" style="color: #FFA500; text-align: left;">-Access Control Vulnerabilities</h3>
 								Access control, also known as authorization is the application of constraints on who (or what) can perform certain actions or access
 								resources that they have requested. Access control involves enforcing policies so as to prevent users from acting
 								outside of their intended permissions. In the context of web applications, access control is dependent on authentication and session management.
@@ -266,7 +266,7 @@ Cookie: TEMPLATE=../../../../../etc/passwd</code></pre>
 								by attackers.
 								<br><br>
 
-								<h3 id="file_upload_vulnerabilities" style="color: #FFA500;">-File Upload Vulnerabilities</h3>
+								<h3 id="file_upload_vulnerabilities" style="color: #FFA500; text-align: left;">-File Upload Vulnerabilities</h3>
 								A file upload is the transmission of a file from one computer system to another. A file upload vulnerability occurs when a web server allows users to 
 								upload files to its filesystem without sufficiently validating the file's properties such as the file's name, type, size and contents. Failing to enforce
 								restrictions enables attackers to upload potentially dangerous files instead. In the worst case scenario, an attacker can potentially upload a server-side
@@ -285,7 +285,7 @@ Cookie: TEMPLATE=../../../../../etc/passwd</code></pre>
 								upload the web shell.
 								<br><br>
 								
-								<h3 id="ssrf" style="color: #FFA500;">-Server-side Request Forgery (SSRF)</h3>
+								<h3 id="ssrf" style="color: #FFA500; text-align: left;">-Server-side Request Forgery (SSRF)</h3>
 								SSRF is a web security vulnerability that enables an attacker to induce the server-side application to make requests to an unintended location as the server is 
 								essentially used as a proxy to relay the requests. Criminals usually use SSRF attacks to target internal systems that are behind firewalls and are not accessible 
 								from the external network or to access services available through the loopback interface (127.0.0.1) of the vulnerable server. In other cases an attacker may be 
@@ -306,7 +306,7 @@ Cookie: TEMPLATE=../../../../../etc/passwd</code></pre>
 								to access files on the local system or the internal network.
 								<br><br>
 
-								<h3 id="xxe_injection" style="color: #FFA500;">- XML External Entity (XXE) Injection</h3>
+								<h3 id="xxe_injection" style="color: #FFA500; text-align: left;">- XML External Entity (XXE) Injection</h3>
 								The Extensible Markup Language (XML) is a markup language that is commonly used by web/mobile applications, word processors, content management platforms and 
 								word processors to store and transport data between computer systems. XML External Entity (XXE) on the other hand is an entirely valid but abusable feature of the
 								XML language as it is frequently enabled by default by standard XML parsers. XXE injection enables an attacker to interfere with an application's processing of XML data allowing the attacker to
@@ -326,7 +326,55 @@ Cookie: TEMPLATE=../../../../../etc/passwd</code></pre>
 								then replaced the occurrences of the named external entity <code>xxe</code>; with the contents accessed by the <code>SYSTEM</code> identifier.
 								<br><br>
 								<hr>
-								<h3 id="csv">CLIENT SIDE VULNERABILITIES</h3>
+
+
+								<h3 id="csv" style="text-align: left;">CLIENT SIDE VULNERABILITIES</h3>
+								As explained earlier that server-side vulnerabilities are flaws present in the server-side of a client-server model; Likewise, client-side vulnerabilities are flaws present in
+								the client-side of a client-server model. To offer a secure experience, companies must ensure that customers can safely access and engage with their digital business. Client-side
+								vulnerabilities known to web applications include:
+								<ul type="circle">
+									<li><a href="#xss" style="color: #FFA500;">Cross-site Scripting (XSS)</a></li>
+									<li><a href="#csrf" style="color: #FFA500;">Cross-site Request Forgery (CSRF)</a></li>
+									<li><a href="#" style="color: #FFA500;">Cross-origin Resource Sharing (CORS)</a></li>
+									<li><a href="#" style="color: #FFA500;">Clickjacking</a></li>
+									<li><a href="#" style="color: #FFA500;">Dom-based Vulnerabilities</a></li>
+                                    <li><a href="#websockets" style="color: #FFA500;">Web Sockets</a></li>
+                                </ul>
+
+								<h3 id="xss" style="color: #FFA500; text-align: left;">-Cross-site Scripting (XSS)</h3>
+								XSS is a web security vulnerability that allows an attacker to compromise the interactions that users have with a vulnerable application.
+								It is a client-side code injection attack that aims to execute malicious scripts in a web browser of the victim by including malicious code in a legitimate web page 
+								or web application. The web page or web application are used as vehicles to deliver the malicious script (after injection) to the user's browser as the actual attack
+								occurs when the victim visits the web page or application that contains the malicious code. This allows the attacker to masquerade as the victim user, perform actions
+								and access any data that the user is able to access. If the compromised user has privileged access with the application, the attacker might be able to gain full
+								control of the application's data and functionality.
+								<br><br>
+								XSS attacks are possible in VBScript, ActiveX, Flash and even CSS; however they are most common in JavaScript (JS), primarily because JS is fundamental to most browsing
+								experiences. There are three main types of XSS attacks; they include:
+								<ol type="1" style="margin-left: 0.8rem;">
+									<li>Reflected XSS: This is the simplest form of XSS. It arises when an application includes received data in an HTTP request in an unsafe manner within the immediate response.
+										The malicious script is injected within the data that is returned in the HTTP response.
+									</li>
+									<li>
+										Stored XSS: This type of XSS arises when an application receives data from an untrusted source and includes that in later HTTP responses in an unsafe way. In this case
+										the attacker injects malicious code within data which gets stored by the application. If the data is used by the application in later HTTP responses and is not properly
+										cleaned  the malicious code gets executed.
+									</li>
+									<li>
+										Dom-based XSS: Dom XSS occurs usually when client-side JavaScript processes data from an untrusted source in an unsafe way and writes it back to a sink in the web page.
+									</li>
+								</ol>
+								<u>Identifying the attack surface</u><br>
+								Cross-site scripting vulnerabilities are found in areas of an application where received user input (URL and non-URL based input) is returned in an application. 
+								A proper approach is to submit easily identifiable input into every entry point in an application and identify every location where the submitted input is returned.
+								<br><br>
+								<u>Example:</u><br>
+								<img src="img/webappvulns/xss.png" class="displayimage">
+								Malicious code is inputed into the value of the search query <code>q</code>. When the input is returned by the application, because it is not sanitized properly, the
+								web browser parses the input as code instead of data which would result in the pop up of a dialog box showing 1.
+								<br><br>
+
+								<h3 id="csrf" style="color: #FFA500; text-align: left;">-Cross-site Request Forgery (CSRF)</h3>
 							</p>
 							<p style="text-align: center;">Thank you for reading my writeup 😀 <a href="../../index.html" style="color: #FFA500;">| Home</a></p>
                         </article>
