@@ -56,7 +56,7 @@
 					<!-- <div class="content"> -->
                         <div id="middle">
                         <article style="text-align: justify;">
-                            <h3 style="text-align: right; color: gray;">Last Updated on May 12, 2022 | <a href="../../index.html">Home</a></h3>
+                            <h3 style="text-align: right; color: gray;">Last Updated on May 15, 2022 | <a href="../../index.html">Home</a></h3>
                             <p>
 							<h2 style="text-align: center;">Web Application Vulnerabilities</h2>
 							<hr style="margin-top: 0.1rem; margin-bottom: 2rem; border-bottom: solid 1px #ffffff;;">
@@ -478,7 +478,7 @@ Cookie: TEMPLATE=../../../../../etc/passwd</code></pre>
 									</li>
 								</ul>
 
-								<h3 id="dom_b_v" style="color: #FFA500; text-align: left;">Dom-based Vulnerabilities</h3>
+								<h3 id="dom_b_v" style="color: #FFA500; text-align: left;">-Dom-based Vulnerabilities</h3>
 								The Document Object Model (DOM) is an application programming interface for HTML and XML documents. It defines the logical structure of documents and the way a document is accessed and manipulated.
 								In a web browser the DOM is how a page is represented internally. In an html document <code>object</code> refers to "stuff" on the web page which are sometimes called elements or nodes. These <code>objects</code>
 								include; the <code>contents</code> on the page like words, videos, images; the <code>structural elements</code> on the page like divs, containers, sections; and the <code>attributes</code> on the page 
@@ -573,7 +573,7 @@ Cookie: TEMPLATE=../../../../../etc/passwd</code></pre>
 								WebSocket connections are normally initiated using client-side JavaScript like the following:
 								<pre><code>var wsocket = new WebSocket("wss://normal-website.com/chat");</code></pre>
 								A simple message could be sent using client-side JavaScript like the following:
-								<pre><code>ws.send("Hello, my name is blacree");</code></pre>
+								<pre><code>ws.send("Hello, I'm blacree");</code></pre>
 								WebSocket messages can contain any content or data format. It is common in modern applications, for JSON to be used to send structured data within WebSocket messages.
 								For example, a chat-bot application using webscokets might send the following message:
 								<pre><code>{"user":"blacree", "content":"This is a web application vulnerability write-up"}</code></pre>
@@ -599,7 +599,73 @@ Cookie: TEMPLATE=../../../../../etc/passwd</code></pre>
 								<pre><code>{"message":"&lt;img src='' onerror='alert(1)'&gt;"}</code></pre>
 								<hr>
 
-								<h3 id="others" style="text-align: left;">- ADVANCED TOPICS (OTHERS)</h3>
+								<h3 id="others" style="text-align: left;">ADVANCED TOPICS (OTHERS)</h3>
+								These vulnerabilities aren't necessarily more difficult to master but they generally require deeper understanding and a wider breadth of knowledge.
+								They include:
+								<ul type="circle">
+									<li><a href="#insecure_deserialization" style="color: #FFA500;">Insecure Deserialization</a></li>
+									<li><a href="#ss_templateinjection" style="color: #FFA500;">Server-side Template Injection</a></li>
+									<li><a href="#web_cache_poisoning" style="color: #FFA500;">Web Cache Poisoning</a></li>
+									<li><a href="#hhh_attacks" style="color: #FFA500;">HTTP Host Header Attacks</a></li>
+									<li><a href="#http_request_smuggling" style="color: #FFA500;">HTTP Request Smuggling</a></li>
+									<li><a href="#oauth_auth" style="color: #FFA500;">OAUTH Authentication</a></li>
+								</ul>
+
+								<h3 id="insecure_deserialization" style="color: #FFA500; text-align: left;">-Insecure Deserialization</h3>
+								Serialization is the process of converting an object (in a programming language) into a format that can be saved to disk (file or database) or transferred over a network.
+								The format in which an object is serialized into can either be binary or structured text such as JSON.
+								Deserialization on the other is the process of restoring the serialized data to its exact state before it was serialized. It involves transforming the serialized data back into
+								a fully functional replica of the original object. Serialization and deserialization vary greatly depending on the programming language being used, serialization formats and the software
+								libraries used.
+								<br><br>
+								Insecure Deserialization happens when user-controllable data is deserialized by a website enabling an attacker to manipulate serialized objects in order to pass harmful data into the application code.
+								Successfull deserialization enables  an attacker to carry out denail-of-service (DoS) attacks, authentication bypasses and remote code execution.
+								<br><br>
+								<u>Identifying the attack surface</u><br>
+								During auditing, look into all the data that is being passed into website, and try to identify anything that looks like serialized data. Serialized data can be identified relatively easily if you
+								know the format that different languages use.
+								<br><br>
+								<u>Example:</u><br>
+								In python you can use pickle library to serialize (deserialize) an object structure into (from) a byte stream.
+								The following python code example demonstrates a simple server-client program. The server receives a connection from the client and waits for the client to send data. Once the data is received, it deserializes
+								(unpickles) the data...
+								<img src="img/webappvulns/insecure_deserialization_one.png" class="displayimage">
+								An attacker can get remote code execution on the server using the following exploit:
+								<img src="img/webappvulns/insecure_deserialization_two.png" class="displayimage">
+								Pickle allows different objects to declare how they should be serialized (pickled) using the <code>__reduce__</code> method. Whenever an object is serialized, the <code>__reduce__</code> method
+								defined gets called. This returns either a string, which may represent the name of a Python global, or a tuple describing how to reconstruct this object during deserialization. This tuple consists of two arguments;
+								the callable (which in most cases would be the name of the class to call) and the arguments to be passed to the callable.
+								During the process of deserialization (unpickling) by the server with the <code>_pickle.loads()</code> method, the pickle library will call the callable on the provided arguments to construct the object
+								which results in the code execution.
+								<br><br>
+
+								<h3 id="ss_templateinjection" style="color: #FFA500; text-align: left;">-Server-side Template Injection</h3>
+								Server-side templates offer an easy way of handling the dynamic generation of HTML on web-pages. It lets developers pre-populate a webpage with custom user information thereby making it possible to provide dynamic
+								contents with flexible shortcuts and functionality.
+								<br><br>
+								Server-side injection is when an attacker is able to use native template syntax to inject malicious payload into a template which is then executed by the server. It occurs when user controllable input is concatenated
+								directly into a template rather than passed in as data. This allows attackers to be able to inject arbitrary template directives in order to manipulate the template engine and possibly execute arbitrary code on the
+								affected server.
+								<br><br>
+								<u>Identifying the attack surface</u><br>
+								When trying to identify server-side template injection vulnerabilities, there are two possible contexts to consider. We have the plain-text context and the code context.
+								Plain-text context occurs in situations where the application allows you to freely input content either by using HTML tags direclty or by using the template's native syntax which is then rendered to HTML on the back-end
+								before the HTTP response is sent. Code context on the other hand occurs when user input is being placed within a template expression. For example, user-controllable variable name being placed inside a parameter. Successfully
+								performing server-side template injection in this context requires the attacker to be able to recognize and use the right syntax in his malicious input for the template engine being used.
+								<br><br>
+								<u>Example:</u><br>
+								A blog post website vulnerable to server-side template injection (code context) makes use of the <code>Tornado</code> template engine. Using server-side template it sets the author for each blog post during its creation.
+								When a user creates a new blog post, the request body of the POST request made to the server has the following among its key-value pairs...
+								<pre><code>blog-post-author=user.first_name</code></pre>
+								This tells us that <code>user.first_name</code> is used directly in a template expression.
+								<code>Tornado</code> being a python template engine allows one to import the <code>os</code> module and use the <code>system</code> method to execute arbitrary system commands. A payload would look like...
+								<pre><code>{% import os %}
+{{os.system('whoami')}}</code></pre>
+								In <code>Tornado</code> curly braces are used to create template expressions; such as <code>{{ someExpression }}</code>. An attacker would therefore be able to perform server-side template injection to get RCE by modifying the value of the
+								<code>blog-post-author</code> in the POST request to...
+								<pre><code>blog-post-author=user.first_name}}{%25+import+os+%25}{{os.system('whoami')</code></pre>
+								
+								<h3 id="web_cache_poisoning" style="color: #FFA500; text-align: left;">-Web Cache Poisoning</h3>
 							</p>
 							<p style="text-align: center;">Thank you for reading my writeup 😀 <a href="../../index.html" style="color: #FFA500;">| Home</a></p>
                         </article>
