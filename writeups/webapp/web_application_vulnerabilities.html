@@ -56,7 +56,7 @@
 					<!-- <div class="content"> -->
                         <div id="middle">
                         <article style="text-align: justify;">
-                            <h3 style="text-align: right; color: gray;">Last Updated on May 15, 2022 | <a href="../../index.html">Home</a></h3>
+                            <h3 style="text-align: right; color: gray;">Last Updated on 23rd of May, 2022 | <a href="../../index.html">Home</a></h3>
                             <p>
 							<h2 style="text-align: center;">Web Application Vulnerabilities</h2>
 							<hr style="margin-top: 0.1rem; margin-bottom: 2rem; border-bottom: solid 1px #ffffff;;">
@@ -100,7 +100,7 @@
                                 SQL Injection is a type of vulnerability that allows an attacker to interfere with the queries that an application makes to its database,
                                 allowing the attacker to interact with data they are not normally able to retrieve. It involves placement of malicious code in SQL statements, via web page input;
 								this can result in unauthorized access to sensitive data such as passwords, personal user information or credit card details. 
-								In many cases, an attacker can modify or delete this data, causing damage to changes to the application's content or behavior and in some situations an attacker
+								In many cases, an attacker can modify or delete this data, causing damage and changes to the application's content or behavior and in some situations an attacker
                                 can escalate an SQL Injection attack to compromise the underliying server or other back-end infrastructure.
 								<br><br>
                                 <u>Identifying the attack surface</u><br>
@@ -124,7 +124,7 @@
 								</ul> -->
 
 								<h3 id="authentication" style="color: #FFA500; text-align: left;">-Authentication</h3>
-								Authentication is the process of verifying the identify of a given user or client. In short, it involves making sure that ehy really are who they claim to be before given access
+								Authentication is the process of verifying the identify of a given user or client. In short, it involves making sure that they really are who they claim to be before given access
 								to a particular resource. Robust authentication mechanisms are an integral aspect of effective web security as websites are in part exposed to anyone who is connected to the internet by
 								design. Authentication in web applications can be categorized into three categories:
 								<ol type="I" style="margin-left: 0.8rem;">
@@ -132,7 +132,7 @@
 									<li>Something you have; such as a security token</li>
 									<li>Something you are or do; this can be your biometrics such as your fingerprint</li>
 								</ol>
-								Authentication vulnerabilities arise due to logic flaws or poor coding implementation in a web application. They can also arise when applications fail to protect against certain
+								Authentication vulnerabilities arise due to logic flaws or poor coding implementation in a web application. They can also arise when applications fail to protect themselves against certain
 								attack vectors, such as brute-force attacks. Some common authentication vulnerabilities include:
 								<ul type="circle">
 									<li>
@@ -146,7 +146,7 @@
 									<li>
 										Non-implemented Brute-Force Protection: A common attack against authentication pages is brute-force attack. A brute-force attack for example, is when an attacker attempts
 										multiple usernames and passwords until they obtain access to a valid account. This type of attack is easier to perform if the application has a user enumeration or weak password
-										policy. An application is prone to this attack when it fails to protect itself from it through methods such as implementing a strict IP-based user rate limiter.
+										policy. An application is prone to this attack when it actively fails to protect itself from it through methods such as implementing a strict IP-based user rate limiter.
 									</li><br>
 									Others include broken password reset systems, lack of additional security measures such as Two-Factor Authentication(2FA) and much more.
 								</ul>
@@ -154,17 +154,17 @@
 								<h3 id="directory_traversal" style="color: #FFA500; text-align: left;">-Directory Traversal</h3>
 								Directory traversal, also known as file path traversal is a vulnerability that allows an attacker to read arbitrary files on the server. This might include application code, data,
 								crednetials for back-end systems, and sensitive operating system files. Directory traversal is casued by insufficient security validation or sanitization of user-supplied file names,
-								such that the supplied characters allows the attacker to break out of the web server's root directory and access other locations through the operating system's file system API.
+								such that the supplied characters allows the attacker to break out of the web server's root directory and access other locations through the operating system's file API.
 								<br><br>
 								<u>Identifying the attack surface</u><br>
-								As the name suggest directory traversal vulnerabilities are found in areas of a web application where files contained on the server's file system are accessed in way or the other and are
+								As the name suggest directory traversal vulnerabilities are found in areas of a web application where files contained on the server's file system are accessed in one way or the other and are
 								user-controllable.
 								<br><br>
 								<u>Example:</u>
 								<img src="img/webappvulns/directory_traversal.png" class="displayimage">
 								What this php code does is that by default it returns a file in the templates directory called "red.php". But it also checks to determine if the <code>"COOKIE"</code> header of the request that was made to the server has a
 								<code>TEMPLATE</code> field. If it does the <code>$template</code> variable is automatically set to the passed value. The variable is then concatenated to the intended file path. Because no proper checks (such as blacklisting)
-								or input validation is performed on the data returned by the <code>TEMPLATE</code> field of the <code>COOKIE</code> header, an attack against the system could be to send the following HTTP request...
+								or input validation is performed on the data returned by the <code>TEMPLATE</code> field of the <code>COOKIE</code> header, an attacker can perform directory traversal by sending the following HTTP request...
 								<pre><code>GET /default.php HTTP/1.0
 Cookie: TEMPLATE=../../../../../etc/passwd</code></pre>
 								This would result in the server returning the contents of the passwd file of the linux file system instead of the files contained in the intended path of the php code.
@@ -210,7 +210,7 @@ Cookie: TEMPLATE=../../../../../etc/passwd</code></pre>
 								<br><br>
 								<u>Example:</u>
 								<img src="img/webappvulns/blv_product_to_buy.png" class="displayimage">
-								The products shown in the image can be bought from a shopping application which has a business logic flaw. This allows as an attacker to purchase the first product (Leather Jacket)
+								The products shown in the image can be bought from a shopping application which has a business logic flaw. This allowed an attacker to purchase the first product (Leather Jacket)
 								which costs <code>$1337.00</code> for a very low price. He does this by modifying the Add to cart POST request of the second product (Safety First)...
 								<img src="img/webappvulns/blv_post_negative_product_quantity.png" class="displayimage">
 								<img src="img/webappvulns/blv_negative_total.png" class="displayimage">
@@ -221,12 +221,12 @@ Cookie: TEMPLATE=../../../../../etc/passwd</code></pre>
 								<br><br>
 
 								<h3 id="information_disclosure" style="color: #FFA500; text-align: left;">-Information Disclosure</h3>
-								Also known as information leakage, information disclosure occurs when a website unintentionally reveals sensitive information to its users as a result of its failure to protect sensitive
-								information like passwords, financial information, health data or even technical details about the website and its infrastructure. Although some of this information will be of limited user,
+								Also known as information leakage, information disclosure occurs when a website unintentionally reveals sensitive information to its users as a result of its failure to protect them appropraitely.
+								This could be passwords, financial information, health data or even technical details about the website and its infrastructure. Although some of this information will be of limited use,
 								it can potentially be a starting point for exposing an additonal attack surface, which may contain other interesting vulnerabilities. The information disclosed could even provide answers to
 								the attacker when trying to construct complex, high-severity attacks.
 								<br><br>
-								Some examples of infomration disclosure include:
+								Some examples of information disclosure include:
 								<ul type="circle">
 									<li>Harcoding sensitive data like tokens, secret_keys, passwords in the source code.</li>
 									<li>Transmitting sensitive information in plain text.</li>
@@ -261,7 +261,7 @@ Cookie: TEMPLATE=../../../../../etc/passwd</code></pre>
 										that a multistep process is followed sequentially without any steps skipped.
 									</li>
 								</ol>
-								The simplest example of an access control vulnerability is when an unauthenticated user or non-admin user has access to a page that requires admin
+								One of the simplest example of an access control vulnerability is when an unauthenticated user or non-admin user has access to a page that requires admin
 								privileges. Although links to these types of pages are typically not included in the web application, they can be found through directory brute-forcing
 								by attackers.
 								<br><br>
@@ -288,7 +288,7 @@ Cookie: TEMPLATE=../../../../../etc/passwd</code></pre>
 								<h3 id="ssrf" style="color: #FFA500; text-align: left;">-Server-side Request Forgery (SSRF)</h3>
 								SSRF is a web security vulnerability that enables an attacker to induce the server-side application to make requests to an unintended location as the server is 
 								essentially used as a proxy to relay the requests. Criminals usually use SSRF attacks to target internal systems that are behind firewalls and are not accessible 
-								from the external network or to access services available through the loopback interface (127.0.0.1) of the vulnerable server. In other cases an attacker may be 
+								from the external network, or to access services available through the loopback interface (127.0.0.1) of the vulnerable server. In other cases an attacker may be 
 								able to force the server to connect to arbitrary external systems.
 								<br><br>
 								<u>Identifying the attack surface</u><br>
@@ -323,7 +323,7 @@ Cookie: TEMPLATE=../../../../../etc/passwd</code></pre>
 								<img src="img/webappvulns/xxe_injection.png" class="displayimage">
 								Here the attacker is able to view the contents of a local file called <code>/etc/passwd</code> via the declared <code>SYSTEM</code> identifier.
 								The <code>SYSTEM</code> identifier is assumed to be a URI that can be accessed (dereferenced) by the XML processor when processing the entity. The XML processor
-								then replaced the occurrences of the named external entity <code>xxe</code>; with the contents accessed by the <code>SYSTEM</code> identifier.
+								then replaced the occurrences of the named external entity <code>xxe</code>, with the contents accessed by the <code>SYSTEM</code> identifier.
 								<br><br>
 								<hr>
 
@@ -343,9 +343,9 @@ Cookie: TEMPLATE=../../../../../etc/passwd</code></pre>
 
 								<h3 id="xss" style="color: #FFA500; text-align: left;">-Cross-site Scripting (XSS)</h3>
 								XSS is a web security vulnerability that allows an attacker to compromise the interactions that users have with a vulnerable application.
-								It is a client-side code injection attack that aims to execute malicious scripts in a web browser of the victim by including malicious code in a legitimate web page 
+								It is a client-side code injection attack that aims to execute malicious scripts in the web browser of the victim by including malicious code in a legitimate web page 
 								or web application. The web page or web application are used as vehicles to deliver the malicious script (after injection) to the user's browser as the actual attack
-								occurs when the victim visits the web page or application that contains the malicious code. This allows the attacker to masquerade as the victim user, perform actions
+								occurs when the victim visits the web page that contains the malicious code. This allows the attacker to masquerade as the victim user, perform actions
 								and access any data that the user is able to access. If the compromised user has privileged access with the application, the attacker might be able to gain full
 								control of the application's data and functionality.
 								<br><br>
@@ -391,20 +391,20 @@ Cookie: TEMPLATE=../../../../../etc/passwd</code></pre>
 									</li>
 									<li>
 										Total control of request parameters: The requests that perform the action must not contain any parameters whose values the attacker cannot guess or determine. For example,
-										when causing a user to change their email-address, the function is not vulnerable if an attacker needs to know the users's password to effect the change.
+										when a user tries to change their email-address, the function is not vulnerable if an attacker needs to know the users's current password to effect the change.
 									</li>
 								</ol>
 								<u>Example:</u><br>
 								An application has a functionality that allows its users to change their email address. When a user peforms this action the following request is made...
 								<img src="img/webappvulns/post_request_csrf.png" class="displayimage">
-								If the three conditions are met, an attacker can perform the same action by contructing a web page with the following html...
+								Since the three conditions are met, an attacker can perform the same action by contructing a web page with the following html...
 								<img src="img/webappvulns/csrf_exploit_main.png" class="displayimage">
 								If a victim visits the web page, the attacker would be able to change the user's email address.
 								<br><br>
 
 								<h3 id="cors" style="color: #FFA500; text-align: left;">-Cross-origin Resource Sharing (CORS)</h3>
 								CORS is a browser mechanism that enables controlled access to resources outside of a give domain. It allows resources to be requested from
-								outside the domain (another domain) from which it is located. CORS extends and adds flexibility to the same-origin-policy(SOP).
+								outside the domain (another domain) from which it is located. CORS extends and adds flexibility to the same-origin-policy (SOP).
 								<br><br>
 								The same-origin-policy (SOP) is a restrictive cross-origin specification enforced by web browsers, which controls access to data between websites and web applications.
 								without SOP any web page would be able to access the content of other pages; which can lead to unauthorized access to sensitive data as well as perform actions on
@@ -445,7 +445,7 @@ Cookie: TEMPLATE=../../../../../etc/passwd</code></pre>
 								Clickjacking is an interface-based attack in which a user is tricked into clicking an actionable content on a hidden website by clicking on some other content in a decoy website.
 								In a clickjacking attack the user is tricked into interacting with a UI element that they do not see. It depends upon the incorporation of an invinsible, actionable web page
 								containing a button or hidden link, say within an iframe as it is overlaid on top of the user's anticipated decoy web page content. Clickjacking attacks use CSS to create and
-								manipulate layers; The target website's iframe is positioned within the browser so that there is a precise overlap of the target action with the decoy website using appropraite width and
+								manipulate layers; the target website's iframe is positioned within the browser so that there is a precise overlap of the target action with the decoy website using appropraite width and
 								height position values.
 								<br><br>
 								<u>Identifying the attack surface</u><br>
@@ -555,7 +555,7 @@ Cookie: TEMPLATE=../../../../../etc/passwd</code></pre>
 								</ul>
 								<u>Example:</u><br>
 								<img src="img/webappvulns/domv_cookie.png" class="displayimage">
-								Let's take for instance an ecommerce website stores pricing information in cookies for its shopping carts which is used to determine the total price to be paid
+								An ecommerce website stores pricing information in cookies for its shopping carts which is used to determine the total price to be paid
 								by the user for all cart items as shown in the image above. An attacker can perform Cookie manipulation to get a reduced checkout price for all items by changing
 								the price of any item...
 								<img src="img/webappvulns/domv_cookie_manipulated.png" class="displayimage">
@@ -578,7 +578,7 @@ Cookie: TEMPLATE=../../../../../etc/passwd</code></pre>
 								For example, a chat-bot application using webscokets might send the following message:
 								<pre><code>{"user":"blacree", "content":"This is a web application vulnerability write-up"}</code></pre>
 								<u>Identifying the attack surface</u><br>
-								You can easily determine if a web application is using WebSockets through a web proxy. For instance in <code>BurpSuite</code> you can determine if WebSockets are being used by looking through the
+								You can easily determine if a web application is using WebSockets through a web proxy. For instance, in <code>BurpSuite</code> you can determine if WebSockets are being used by looking through the
 								entries appearing in the WebSockets history tab within Burp Proxy.
 								Finding WebSocket security vulnerabilities generally involves manipulatig them in different ways; such as:
 								<ul type="circle">
@@ -588,7 +588,7 @@ Cookie: TEMPLATE=../../../../../etc/passwd</code></pre>
 								</ul>
 								<u>Example:</u><br>
 								In principle, practically any web security vulerability might arise in relation to WebSockets. It all depends on the context in which the communicated data is used.
-								User-supplied input transmitted to the server might and processed in unsafe ways might lead to server-side related vulnerabilities. Those transmitted to other application users, might lead to client-side related
+								User-supplied input transmitted to the server might be processed in unsafe ways leading to server-side related vulnerabilities and those transmitted to other application users, might lead to client-side related
 								vulnerabilities.
 								<br><br>
 								Suppose on a chat application when a user sends the following message:
@@ -643,7 +643,7 @@ Cookie: TEMPLATE=../../../../../etc/passwd</code></pre>
 								Server-side templates offer an easy way of handling the dynamic generation of HTML on web-pages. It lets developers pre-populate a webpage with custom user information thereby making it possible to provide dynamic
 								contents with flexible shortcuts and functionality.
 								<br><br>
-								Server-side injection is when an attacker is able to use native template syntax to inject malicious payload into a template which is then executed by the server. It occurs when user controllable input is concatenated
+								Server-side template injection is when an attacker is able to use native template syntax to inject malicious payload into a template which is then executed by the server. It occurs when user controllable input is concatenated
 								directly into a template rather than passed in as data. This allows attackers to be able to inject arbitrary template directives in order to manipulate the template engine and possibly execute arbitrary code on the
 								affected server.
 								<br><br>
@@ -661,11 +661,117 @@ Cookie: TEMPLATE=../../../../../etc/passwd</code></pre>
 								<code>Tornado</code> being a python template engine allows one to import the <code>os</code> module and use the <code>system</code> method to execute arbitrary system commands. A payload would look like...
 								<pre><code>{% import os %}
 {{os.system('whoami')}}</code></pre>
-								In <code>Tornado</code> curly braces are used to create template expressions; such as <code>{{ someExpression }}</code>. An attacker would therefore be able to perform server-side template injection to get RCE by modifying the value of the
+								In <code>Tornado</code> curly braces are used to create template expressions; such as <code>{{ someExpression }}</code>. An attacker would therefore be able to perform server-side template injection to get RCE by modifying the value of
 								<code>blog-post-author</code> in the POST request to...
 								<pre><code>blog-post-author=user.first_name}}{%25+import+os+%25}{{os.system('whoami')</code></pre>
 								
 								<h3 id="web_cache_poisoning" style="color: #FFA500; text-align: left;">-Web Cache Poisoning</h3>
+								Caching is the activity of storing data for reuse with the aim of speeding up response times and reducing the computing load required for the component that is being cached.
+								Websites are generally viewed hundreds, thousands or sometimes milliions of times each month. Each time a browser requests a web page, depending on the nature of the web page to supply a response the server has to do a bunch processing such as generating header 
+								and footer, retrieving latest posts, etc. However, in many cases the resulting respone of all these calculations will be exactly the same, so instead of processing each request separately the response is stored and served when needed; thereby enhancing page delivery 
+								speed significantly and reducing the load on the backend server.
+								<br><br>
+								When a web cache receives an HTTP request, it has to determine if there is a cached response that can be served directly or whether the request should be forwarded for handling by the back-end server. Caches do this by identifying equivalent requests after comparing
+								a predefined subset of the request's components, known collectively as the <code>cache key</code> while ignoring all other components of the request (commonly referred to as <code>unkeyed</code> components). If the cache key of an incoming request matches that of 
+								a previous request which has its response stored, then the cache considers them to be equivalent and serves a copy of the cached respone that was generated for the original request (this happens for all subsequent requests with the matching cache key until the cached
+								response expires). Whereas if it finds no stored entry for that request it gets forwarded to the back-end server.
+								<br><br>
+								Web cache poisoning is a technique whereby an attacker exploits the behavior of a web server's caching system by manipulating the unkeyed components of the request so that harmful HTTP response is stored and served to other users. A poisoned web cache can 
+								be a devastating means of distributing numerous types of attacks; such as XSS, open redireciton, Javascript Injection, and so on.								
+								<br><br>
+								Fundamentally, web cache poisoning involves two phases:
+								<ul type="circle">
+									<li>Elicit a harmful response from the back-end server: The attacker must first work out how to elicit a response from the back-end server that inadvertently contains some kind of dangerous payload.</li>
+									<li>Get the response cached: The attacker then has to get the response cached so that it is subsequently served to the intended victims.</li>
+								</ul>
+								<u>Identifying the attack surface</u><br>
+								To determine if web caching is enabled on a web server, check it's reponse for the <code>X-cache</code> header. This header is used by CDNs (Content Delivery Networks) to indicate whether the response to your HTTP request was served by a proxy or by the origin
+								servers. <code>X-cache: HIT</code> means that the response was served by a proxy (CDN) while <code>X-cache:MISS</code> indicates that the response was processed by the origin server/servers. The presence of this header indicates that caching is enabled on the web server.
+								<br><br>
+								<u>Example:</u><br>
+								<img src="img/webappvulns/web_cache_request.png" class="displayimage">
+								The request is made to a web server which has cache enabled. The cache key configured for that request is <code>stats?page=1</code>. The response returned by the cache system is...
+								<img src="img/webappvulns/web_cache_respone.png" class="displayimage">
+								Using a cache buster it was noticed by an attacker that the unkeyed input <code>Accept-Language</code> has no effect on the language returned in the response and its value is also reflected in the response. After the cached response expires an attacker can exploit the caching
+								system by making the following request to store a malicious response...
+								<img src="img/webappvulns/web_cache_exploit.png" class="displayimage">
+								When other users make the same request since the cache key match that of the attackers malicious request, they get served the stored malicious response.
+								<br><br>
+								
+								<h3 id="hhh_attacks" style="color: #FFA500; text-align: left;">-HTTP Host Header Attacks</h3>
+								The HTTP host header is a mandatory request header as of HTTP/1.1. It specifies the domain that a client (browser) wants to access. It is pretty common for servers to host multiple websites and applications at the same IP address and this can lead to issues when routing
+								incoming requests to the intended application. The host header helps to solve this problem as it helps to identify which back-end component the client wants to communicate so that the request can be directed appropriately.
+								<br><br>
+								HTTP host header attacks arise when a website handles the value of the Host header in unsafe ways. If the server fails to validate and escape it properly an attacker might be able to use it as a means of injecting harmful payloads into the website. Even if the Host header is handled securely,
+								depending on the configuration of the web server, the host header can potentially be overidden by injecting other headers such as the <code>X-Forwarded-Host</code> header.
+								<br><br>
+								Vulnerabilities that arise from HTTP host header attacks generally depend on the context in which the header is used in the web application. This makes it a potential vector for exploiting a range of other vulnerabilities; such as:
+								<ul type="circle">
+									<li>Web cache poisoning</li>
+									<li>Routing-based SSRF</li>
+									<li>Business logic flaws, etc.</li>
+								</ul>
+								<u>Identifying the attack surface</u><br>
+								For obvious reasons the the attack surface for performing host header attacks is the HTTP <code>Host</code> header. This can easily be modified with a web proxy like Burpsuite.
+								<br><br>
+								<u>Example:</u><br>
+								It is common for password reset functionality to include the Host header value when creating password reset links that use a generated secret token. An application uses the php code below to generate a password
+								reset link based on the contents of the HTTP host header...
+								<img src="img/webappvulns/http_host_header.png" class="displayimage">
+								An attacker that is able to supply the right information needed for a password functionality and modifies the HTTP host header to <code>www.attackerwebsite.com</code> would end up generating a reset url that looks like
+								this...
+								<pre><code>https://www.attackerwebsite.com/reset.php?token=[token-code]</code></pre>
+								This gets emailed to the user's email address and when the user clicks the link the attacker is able to steal the token and compromise the user's account.
+								<br><br>
+								
+								<h3 id="http_request_smuggling" style="color: #FFA500; text-align: left;">-HTTP Request Smuggling</h3>
+								HTTP request smuggling is a technique for interfering with the way a web site processes sequences of HTTP requests received from one or more users. Web applictions today commonly employ chains of HTTP servers between users and the main back-end server/servers. For instance, a
+								user sends a request to a front-end server (sometimes called a reverse proxy) which then forwards the request to one or more back-end servers. HTTP request smuggling is carried out by creating customized HTTP requests that make two target entities (such as the front-end and back-end
+								server) to see two distinct series of requests. This can enable an attacker to bypass security controls, gain unauthorized access to sensitive data and compromise other application users.
+								<br><br>
+								The HTTP specification provides two different ways to specify where a request ends using either the <code>Transfer-Encoding</code> header or the <code>Content-Length</code> header. HTTP request smuggling therefore occurs when an attakcer sends both headers in a single request. This can cause
+								either the front-end or back-end server to incorrectly interpret the request, thereby allowing a malicious HTTP query. The exact way in which the malicious request is constructed depends on the behavior of the two servers, of which there are three possibilities:
+								<ul type="circle">
+									<li>CL.TE(Content-Length.Transfer-Encoding): Here the front-end server uses the Content-Length header and the back-end server uses the Transfer-Encoding header.</li>
+									<li>TE.CL(Transfer-Encoding.Content-Length): The front-end server uses the Transfer-Encoding header and the back-end server uses the Content-Length header.</li>
+									<li>TE.TE(Transfer-Encoding.Transfer-Encoding): Both the front-end and back-end server support the Transfer-Encoding header but one of the servers can be induced not to process it by obfuscating the header in some way.</li>
+								</ul>
+								<u>Example:</u><br>
+								<img src="img/webappvulns/http_request_smuggling.png" class="displayimage">
+								CL.TE technique is used in this example. The front-end server processes the <code>Content-Length</code> header and determines that the request body is 13 bytes long up to the end of the <code>MALICIOUS-REQUEST</code>. The whole request then gets forwarded to the back-end server.
+								However, the back-end server processes the Transfer-Encoding header, and so treats the message body as using chunked encoding. The first chunk is stated to be zero length and so is treated as terminating the request.
+								It then treats the <code>MALICIOUS-REQUEST</code> as the start of the next request.
+								<br><br>
+
+								<h3 id="oauth_auth" style="color: #FFA500; text-align: left;">-OAUTH Authentication</h3>
+								OAuth which means <code>Open Authorization</code> is an authorization framework that allows web applications to request limited access to a user's account on another application without the user having to expose their login credentials (such as their password) to the requesting application.
+								This enables users to fine-tune which data they want to share rather than having to hand over full control of their account to a third party (requesting application).
+								<br><br>
+								There are three main players in an OAuth transaction. We have the <code>client application</code>, which is the web application requesting
+								the access; the <code>resource owner</code>, this is the user who owns the account; and the <code>OAuth service provider</code>, this is the website that controls the user's data and access to it.
+								OAuth is widely used to integrate thrid-party functionality that either requires access to certain actions on the user's account or data from the user's account. For example, an application might use OAuth to request access to post links on a user's stream of the OAuth service provider or to access
+								the user's email contact list so that it can suggest people to connect.
+								<br><br>
+								In every OAuth communication process, we have what we call the <code>grant type</code>. The OAuth grant type determines the exact sequence of steps involved in the OAuth process. This affects how the client application communicates with the OAuth service provider. The client application specifies which
+								grant type it wants to use in the initial request it sends to the OAuth service provider. There are several different grant types, each with varying levels of complexity and secruity considerations.
+								<br><br>
+								OAuth authentication vulnerabilities arise partly because the OAuth specification is relatively vague and flexible by design. Although there are a handful of mandatory components required for the basic funcationality of each grant type, the vast majority of their implementation is completely optional.
+								This includes many configuration settings that are necessary for keeping users' data secure. OAuth also lacks built-in security features as it relies almost entirely on developers using the right combination of configuration options and implementing their own additional security measures. In short, there's
+								plenty of opportunity for bad practice to creep in.
+								<br><br>
+								<u>Identifying the attack surface</u><br>
+								It is relatively easy to recongnize when an application uses OAuth authentication. If there is an option to log in using your account from another website, that is a strong indication that it is being used.
+								<br><br>
+								<u>Example:</u><br>
+								During an OAuth authentication process the client application has to provide the OAuth service provider a redirect URL which it would send vital data needed to continue the communication process.
+								If this parameter is not properly validated, depending on the OAuth grant type that is being used; An attacker can set this parameter to a domain he controls which would pontentially give the attacker access to sensitive data like the code grant or access token, enabling the attacker to compromise the
+								user's account.
+								
+								<br><br><br>
+								<h3 style="text-align: left;">REFERENCES</h3>
+								<a href="https://portswigger.net" style="color: #FFA500;" target="_blank">https://portswigger.net</a><br>
+								<a href="https://owasp.org" style="color: #FFA500;" target="_blank">https://owasp.org</a><br>
+								<a href="https://acunetix.com" style="color: #FFA500;" target="_blank">https://acunetix.com</a>
 							</p>
 							<p style="text-align: center;">Thank you for reading my writeup 😀 <a href="../../index.html" style="color: #FFA500;">| Home</a></p>
                         </article>
