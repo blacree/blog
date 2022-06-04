@@ -1,5 +1,5 @@
 # About
 Cybersecurity Blog | Portfolio
 
-## Posts Include
+## Content Include
 Penetration Testing | Application Security | Cloud Security
