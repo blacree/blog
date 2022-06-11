@@ -60,7 +60,9 @@
                             <p>
 							<h2 class="major">VULNHUB - EARTH</h2>
 							<img src="img/earth/earth_banner.png" class="img"/>
-							More to come...<br><br>
+							Earth has an Authentication and Information disclosure vulerability in its web application which is leveraged
+							to get a shell. A binary with the SUID bit set is then exploited to gain root access.
+							<br><br>
 							<hr>
 							</p>
 							<p>
@@ -119,8 +121,12 @@ Nmap done: 1 IP address (1 host up) scanned in 150.55 seconds</code></pre>
 								</ul>
 								The contents <code>testdata.txt</code> include...
 								<img src="img/earth/testdata_contents.png" class="displayimage">
-								Let's use it to decrypt the encrypted messages found on the home page. Using <code>https://</code> we have...
-								<!-- <img> -->
+								Let's use it to decrypt the encrypted messages found on the home page. 
+								<img src="img/earth/encrypted_messages.png" class="displayimage">
+								Let's use the python XOR decryptor on <a href="https://gist.github.com/sigilioso/6b113695571f4c9f520c64b4de6e5a99" target="_blank" style="color: #FFA500;"><code>https://gist.github.com/sigilioso/6b113695571f4c9f520c64b4de6e5a99</code></a>.
+								If you look through the options, you need to convert the message key to hexadecimal first. You can use a Text to Hex converter for that. 
+								Decrypting the last message (0) we have...
+								<img src="img/earth/xor_encryption_decoded_python.png" class="displayimage">
 								We have  <code>earthclimatechangebad4humans</code> which is the password for admin user <code>terra</code>. After logging in we have a cli interface...
 								<img src="img/earth/terratest_admin_cli.png" class="displayimage">
 								Let's exploit it to get a reverse shell. Using the netcast, python or bash commands we get no reverse connection. But if we use base64 encoding we get a connection.
@@ -135,6 +141,29 @@ Nmap done: 1 IP address (1 host up) scanned in 150.55 seconds</code></pre>
 								This takes our encoded ouput, decodes it using base64 binary and runs the output using bash. On our listener we get a connection and can view the user flag.
 								<img src="img/earth/first_shell_apache_user.png" class="displayimage">
 								<h4 style="text-align: left;">Privilege Escalation</h3>
+								Checking for executables that have the SUID bit set, we get...
+								<img src="img/earth/execs_with_suid_bits.png" class="displayimage">
+								We have a binary called <code>reset_root</code>. Executing it, we have...
+								<img src="img/earth/reset_root_exec_result_before_exploitation.png" class="displayimage">
+								As we can see it apparently performs some action, but checks that certain triggers (prerequisites) are met before the action can be performed.
+								If we look through the binary using <code>strings</code>; we find the following information...
+								<img src="img/earth/reset_root_main_action_found.png" class="displayimage">
+								This means that <code>reset_root</code> is used to change the root password to <code>Earth</code> if certain triggers (prerequisites) are met. So how do we check what
+								these triggers are. What we can do is to analyze the binary file upon execution. For that we can use the <code>ltrace</code> or <code>strace</code> commands.
+								<code>ltrace</code> is a library call tracer that helps to display all the functions that are being called at run time (from the library) and the arguments being passed to
+								that function. <code>strace</code> is similar to <code>ltrace</code> but instead of tracing library calls it traces system calls and signals. For example if you want to print
+								something to the screen, the <code>ltrace</code> would show the use of the <code>printf</code> or <code>puts</code> function from the standard library <code>libc</code>.
+								However, under the hood, ultimately, a system call named <code>write</code> is made to actually perform the print action; this is instead traced by <code>strace</code>.
+								<br><br>
+								Using <code>ltrace</code> we have...
+								<img src="img/earth/track_program_execution.png" class="displayimage">
+								Using <code>strace</code> we have...
+								<img src="img/earth/strace_reset_root_output.png" class="displayimage">
+								This tells us that the triggers that is being checked for are certain files which do not exist. Let's create them; run the command below to create the necessary files...
+								<pre><code>$ touch /dev/shm/KHgTFI5G; touch /dev/shm/Zw7bV9U5; touch /tmp/KcM0Wewe</code></pre>
+								Executing <code>reset_root</code> again we have...
+								<img src="img/earth/privilege_escalation.png" class="displayimage">							
+								We have root access 😁.
 							</p>
 							<p style="text-align: center;">Thank you for reading my writeup 😀 <a href="../../index.html" style="color: #FFA500;">| Home</a></p>
                         </article>
