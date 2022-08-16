@@ -81,7 +81,7 @@
 							<p>
 								<h3 id="ssv" style="text-align: left;">SERVER SIDE VULNERABILITIES</h3>
                                 In a client-server model, a server-side refers to programs and operations that run on the server. Typically a server is a computer application, such
-                                as a web server, that runs on a remote computer that is reachable from a user's local computer, smartphone or other devices. As the name implies server side vulnerabilities
+                                as a web application, that runs on a remote computer which is reachable from a user's local computer, smartphone or other devices. As the name implies server side vulnerabilities
                                 are therefore flaws present in the server-side of a client-server model that can be exploited by attackers. Server-side vulnerabilities known to web applications include:
                                 <ul type="circle">
                                     <li><a href="#sql" style="color: #FFA500;">SQL Injection</a></li>
@@ -453,7 +453,7 @@ Cookie: TEMPLATE=../../../../../etc/passwd</code></pre>
 								<u>Identifying the attack surface</u><br>
 								A page is vulnerable to clickjacking if it doesn't have the <code>Content-Security-Policy</code> or <code>X-Frame-Options</code> among its HTTP reponse headers. These response headers 
 								protect a page from clickjacking by controlling how a page can be embedded by different sites. They do these by specifying to the browser, parent pages that are allowed to embed the page.
-								Although there are other methods used to protect against clickjacking such as framebusting which involves modifying a web page HTML code so as to protect the page. However, they are not as
+								Although there are other methods used to protect against clickjacking such as framebusting which involves modifying a web page's HTML so as to protect the page, they are not as
 								reliable as HTTP header options and in some cases may be circumvented.
 								<br><br>
 								<u>Example:</u><br>
